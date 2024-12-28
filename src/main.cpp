@@ -325,21 +325,13 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickTextDraw(int playerid, int clickedid
 		AMX* amx = it->second->amx;
 		int idx = it->second->clickCallback;
 
-		if (idx != 0)
-		{
-			amx_Push(amx, static_cast<cell>(playerid));
-			amx_Exec(amx, NULL, idx);
-		}
-		else
-		{
-			if (!amx_FindPublic(amx, "OnClickDynamicTextDraw", &idx))
-			{
-				amx_Push(amx, static_cast<cell>(it->first));
-				amx_Push(amx, static_cast<cell>(playerid));
-				amx_Exec(amx, NULL, idx);
-			}
-		}
-		
+		if (idx == 0 && amx_FindPublic(amx, "OnClickDynamicTextDraw", &idx) != AMX_ERR_NONE)
+			break;
+
+		amx_Push(amx, static_cast<cell>(it->first));
+		amx_Push(amx, static_cast<cell>(playerid));
+		amx_Exec(amx, NULL, idx);
+
 		break;
 	}
 
@@ -359,20 +351,12 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickPlayerTextDraw(int playerid, int pla
 		AMX* amx = it->second->amx;
 		int idx = it->second->clickCallback;
 
-		if (idx != 0)
-		{
-			amx_Push(amx, static_cast<cell>(playerid));
-			amx_Exec(amx, NULL, idx);
-		}
-		else
-		{
-			if (!amx_FindPublic(amx, "OnClickDynamicPlayerTextDraw", &idx))
-			{
-				amx_Push(amx, static_cast<cell>(it->first));
-				amx_Push(amx, static_cast<cell>(playerid));
-				amx_Exec(amx, NULL, idx);
-			}
-		}
+		if (idx == 0 && amx_FindPublic(amx, "OnClickDynamicPlayerTextDraw", &idx) != AMX_ERR_NONE)
+			break;
+
+		amx_Push(amx, static_cast<cell>(it->first));
+		amx_Push(amx, static_cast<cell>(playerid));
+		amx_Exec(amx, NULL, idx);
 
 		break;
 	}
