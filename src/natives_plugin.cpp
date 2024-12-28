@@ -87,5 +87,14 @@ void Plugin_Settings::ILogger(LogType type, std::string funcs, int playerid, int
 				Plugin_Settings::line
 			);
 		}
+		else if (type == LogType::CALLBACK_NOT_FOUND)
+		{
+			sampgdk::logprintf("[textdraw.streamer] %s: function not found. (%s:%d)"
+			,
+				funcs.c_str(),
+				Plugin_Settings::file.c_str(),
+				Plugin_Settings::line
+			);
+		}
 	}
 }

@@ -21,6 +21,7 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
+#include "amx.h"
 
 #define	INVALID_DYNAMIC_PLAYER_TEXTDRAW	(-1)
 
@@ -42,6 +43,9 @@ enum LogType
 
 	// Data
 	INVALID_TYPE,
+
+	// Misc
+	CALLBACK_NOT_FOUND
 };
 
 struct DefaultText
@@ -71,6 +75,7 @@ struct DefaultText
 
 struct Text_Data
 {
+	AMX*				amx{};
 	int					real_id{};
 	float				create_x{};
 	float				create_y{};
@@ -99,6 +104,7 @@ struct Text_Data
 	std::map<int, int>* extra_id{};
 	float				float_data{};
 	std::vector<int>*	array_data{};
+	int					clickCallback{};
 };
 
 class Plugin_Settings

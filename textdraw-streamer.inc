@@ -110,6 +110,7 @@ native DynamicTextDrawGetAlignment_(Text:textid, const file[], line) = DynamicTe
 native DynamicTextDrawGetPreviewModel_(Text:textid, const file[], line) = DynamicTextDrawGetPreviewModel;
 native DynamicTextDrawGetPreviewRot_(Text:textid, &Float:rotationX, &Float:rotationY, &Float:rotationZ, &Float:zoom, const file[], line) = DynamicTextDrawGetPreviewRot;
 native DynamicTextDrawGetPreviewVehCo(Text:textid, &colour1, &colour2, const file[], line);
+native DynamicTextDrawSetClick(Text:textid, const function[], const file[], line);
 
 // Get the real textdraw id shown
 native DynamicTextDrawGetRealID_(Text:textid, &Text:realid, const file[], line) = DynamicTextDrawGetRealID;
@@ -152,6 +153,7 @@ native DynamicPlayerTextDrawSetString(playerid, PlayerText:textid, const format[
 native DynamicPlayerTextDrawSetPrevMdl(playerid, PlayerText:textid, model, const file[], line);
 native DynamicPlayerTextDrawSetPrevRot(playerid, PlayerText:textid, Float:rotationX, Float:rotationY, Float:rotationZ, Float:zoom = 1.0, const file[], line);
 native DynamicPlayerTextDrawPrevVehCol(playerid, PlayerText:textid, colour1, colour2, const file[], line);
+native DynamicPlayerTextDrawSetClick(playerid, PlayerText:textid, const function[], const file[], line);
 
 // YSF Functions (names changed to avoid open.mp conflicts)
 native IsValidDynamicPlayerTextDraw(playerid, PlayerText:textid);
@@ -666,6 +668,7 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #define DynamicTextDrawGetPreviewRot(%0,%1,%2,%3,%4)		DynamicTextDrawGetPreviewRot_(%0, %1, %2, %3, %4, __file, __line)
 #define DynamicTextDrawGetPreviewVehCol(%0,%1,%2)			DynamicTextDrawGetPreviewVehCo(%0, %1, %2, __file, __line)
 #define DynamicTextDrawGetRealID(%0,%1)						DynamicTextDrawGetRealID_(%0, %1, __file, __line)
+#define TextDrawSetClick(%0,%1)								DynamicTextDrawSetClick(%0, %1, __file, __line)
 
 // Player
 #define IsDynamicPlayerTextDrawVisible(%0,%1)				IsDynamicPlayerTextDrawVisible_(%0, %1, __file, __line)
@@ -687,3 +690,4 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #define DynPlayerTextDrawGetPreviewRot(%0,%1,%2,%3,%4,%5)	DynPlayerTextDrawGetPreviewRot_(%0, %1, %2, %3, %4, %5, __file, __line)
 #define DynPlayerTextDrawGetPrevVehCol(%0,%1,%2,%3)			DynPlayerTextDrawGetPrevVehCol_(%0, %1, %2, %3, __file, __line)
 #define PlayerTextDrawGetRealID(%0,%1,%2)					PlayerTextDrawGetRealID_(%0, %1, %2, __file, __line)
+#define PlayerTextDrawSetClick(%0,%1,%2)					DynamicPlayerTextDrawSetClick(%0, %1, %2, __file, __line)

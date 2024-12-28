@@ -70,6 +70,7 @@ namespace Natives
 	cell AMX_NATIVE_CALL DynamicTextDrawGetPreviewModel(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicTextDrawGetPreviewRot(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicTextDrawGetPreviewVehicleColours(AMX* amx, cell* params);
+	cell AMX_NATIVE_CALL DynamicTextDrawSetClickCallback(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicTextDrawGetRealID(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicTextDrawGetSize(AMX* amx, cell* params);
 
@@ -114,6 +115,7 @@ namespace Natives
 	cell AMX_NATIVE_CALL DynamicPlayerTextDrawGetPreviewModel(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicPlayerTextDrawGetPreviewRot(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicPlayerTextDrawGetPreviewVehicleColours(AMX* amx, cell* params);
+	cell AMX_NATIVE_CALL DynamicPlayerTextDrawSetClickCallback(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL PlayerTextDrawGetRealID(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL PlayerTextDrawGetSize(AMX* amx, cell* params);
 

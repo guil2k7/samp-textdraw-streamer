@@ -124,6 +124,7 @@ extern "C" const AMX_NATIVE_INFO NativeList[] =
 	{"DynamicTextDrawSetPreviewModel",					Natives::DynamicTextDrawSetPreviewModel},
 	{"DynamicTextDrawSetPreviewRot",					Natives::DynamicTextDrawSetPreviewRot},
 	{"DynamicTextDrawSetPreviewVehCol",					Natives::DynamicTextDrawSetPreviewVehicleColours},
+	{"DynamicTextDrawSetClick",							Natives::DynamicTextDrawSetClickCallback},
 	
 	{"IsValidDynamicTextDraw",							Natives::IsValidDynamicTextDraw},
 	{"IsDynTextDrawVisibleForPlayer",					Natives::IsDynamicTextDrawVisibleForPlayer},
@@ -169,6 +170,7 @@ extern "C" const AMX_NATIVE_INFO NativeList[] =
 	{"DynamicPlayerTextDrawSetPrevMdl",					Natives::DynamicPlayerTextDrawSetPreviewModel},
 	{"DynamicPlayerTextDrawSetPrevRot",					Natives::DynamicPlayerTextDrawSetPreviewRot},
 	{"DynamicPlayerTextDrawPrevVehCol",					Natives::DynamicPlayerTextDrawSetPreviewVehicleColours},
+	{"DynamicPlayerTextDrawSetClick",					Natives::DynamicPlayerTextDrawSetClickCallback},
 	
 	{"IsValidDynamicPlayerTextDraw",					Natives::IsValidDynamicPlayerTextDraw},
 	{"IsDynamicPlayerTextDrawVisible",					Natives::IsDynamicPlayerTextDrawVisible},
@@ -242,7 +244,7 @@ PLUGIN_EXPORT void PLUGIN_CALL ProcessTick()
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerConnect(int playerid)
 {
-	// Baðlanan oyuncuyu listeye ekle
+	// Baï¿½lanan oyuncuyu listeye ekle
 	if (playerid >= 0 && playerid < MAX_PLAYERS)
 	{
 		GlobalText::PlayerList.insert(playerid);
@@ -252,21 +254,21 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerConnect(int playerid)
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDisconnect(int playerid, int reason)
 {
-	// Baðlanan oyuncuda textdraw gözüküyor mu?
+	// Baï¿½lanan oyuncuda textdraw gï¿½zï¿½kï¿½yor mu?
 	for (auto textList = GlobalText::gTextVisible.begin(); textList != GlobalText::gTextVisible.end(); textList++)
 	{
-		// Tüm textdrawlarda bu oyuncuyu ara
+		// Tï¿½m textdrawlarda bu oyuncuyu ara
 		auto p = GlobalText::gTextVisible[textList->first].find(playerid);
 		if (p != GlobalText::gTextVisible[textList->first].end())
 		{
-			// Textdraw da gösteriliyorsa oyuncuyu kaldýr
+			// Textdraw da gï¿½steriliyorsa oyuncuyu kaldï¿½r
 			GlobalText::gTextVisible[textList->first].erase(p);
 		}
 
-		// Gösterilen textdraw da oyuncu kalmadýysa
+		// Gï¿½sterilen textdraw da oyuncu kalmadï¿½ysa
 		if (GlobalText::gTextVisible[textList->first].empty())
 		{
-			// Textdrawý sunucudan sil
+			// Textdrawï¿½ sunucudan sil
 			auto t = GlobalText::gText->find(textList->first);
 			if (t != GlobalText::gText->end())
 			{
@@ -279,7 +281,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDisconnect(int playerid, int reason)
 		}
 	}
 
-	// Baðlanan oyuncuyu listeden kaldýr
+	// Baï¿½lanan oyuncuyu listeden kaldï¿½r
 	GlobalText::PlayerList.erase(playerid);
 
 	// PlayerTextdraw havuzunu ve slot manageri temizle
@@ -289,7 +291,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDisconnect(int playerid, int reason)
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickTextDraw(int playerid, int clickedid)
 {
-	// ESC bastýysa
+	// ESC bastï¿½ysa
 	if (clickedid == INVALID_TEXT_DRAW)
 	{
 		int idx;
@@ -308,60 +310,72 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickTextDraw(int playerid, int clickedid
 				amx_Exec(*p, NULL, idx);
 			}
 		}
+
+		return false;
 	}
-	else
+
+	if (gAmx.empty() || GlobalText::gText->empty())
+		return false;
+
+	for (std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->begin(); it != GlobalText::gText->end(); it++)
 	{
-		if (!gAmx.empty() && !GlobalText::gText->empty())
+		if (it->second->real_id != clickedid)
+			continue;
+
+		AMX* amx = it->second->amx;
+		int idx = it->second->clickCallback;
+
+		if (idx != 0)
 		{
-			for (std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->begin(); it != GlobalText::gText->end(); it++)
+			amx_Push(amx, static_cast<cell>(playerid));
+			amx_Exec(amx, NULL, idx);
+		}
+		else
+		{
+			if (!amx_FindPublic(amx, "OnClickDynamicTextDraw", &idx))
 			{
-				if (it->second->real_id == clickedid)
-				{
-					int idx;
-					for (std::set<AMX*>::iterator p = gAmx.begin(); p != gAmx.end(); p++)
-					{
-						if (!amx_FindPublic(*p, "OnClickDynamicTextDraw", &idx))
-						{
-							amx_Push(*p, static_cast<cell>(it->first));
-							amx_Push(*p, static_cast<cell>(playerid));
-							amx_Exec(*p, NULL, idx);
-						}
-					}
-					break;
-				}
+				amx_Push(amx, static_cast<cell>(it->first));
+				amx_Push(amx, static_cast<cell>(playerid));
+				amx_Exec(amx, NULL, idx);
 			}
 		}
+		
+		break;
 	}
+
 	return false;
 }
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickPlayerTextDraw(int playerid, int playertextid)
 {
-	if (!gAmx.empty() && PlayerText::pText[playerid] != nullptr && !PlayerText::pText[playerid]->empty())
+	if (gAmx.empty() || !PlayerText::pText[playerid] || PlayerText::pText[playerid]->empty())
+		return false;
+
+	for (auto it = PlayerText::pText[playerid]->begin(); it != PlayerText::pText[playerid]->end(); it++)
 	{
-		for (auto it = PlayerText::pText[playerid]->begin(); it != PlayerText::pText[playerid]->end(); it++)
+		if (it->second->real_id != playertextid)
+			continue;
+
+		AMX* amx = it->second->amx;
+		int idx = it->second->clickCallback;
+
+		if (idx != 0)
 		{
-			if (it->second->real_id == playertextid)
+			amx_Push(amx, static_cast<cell>(playerid));
+			amx_Exec(amx, NULL, idx);
+		}
+		else
+		{
+			if (!amx_FindPublic(amx, "OnClickDynamicPlayerTextDraw", &idx))
 			{
-				int idx;
-				for (std::set<AMX*>::iterator p = gAmx.begin(); p != gAmx.end(); p++)
-				{
-					if (!amx_FindPublic(*p, "OnClickDynamicPlayerTextDraw", &idx)) 
-					{
-						//	playerid, textid
-						//
-						//		|		|
-						//
-						//		0		1
-						//
-						amx_Push(*p, static_cast<cell>(it->first));	//	1
-						amx_Push(*p, static_cast<cell>(playerid));	//	0
-						amx_Exec(*p, NULL, idx);
-					}
-				}
-				break;
+				amx_Push(amx, static_cast<cell>(it->first));
+				amx_Push(amx, static_cast<cell>(playerid));
+				amx_Exec(amx, NULL, idx);
 			}
 		}
+
+		break;
 	}
+
 	return false;
 }

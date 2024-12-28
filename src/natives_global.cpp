@@ -27,17 +27,18 @@ cell AMX_NATIVE_CALL Natives::CreateDynamicTextDraw(AMX* amx, cell* params)
 	// Parametreler
 	CHECK_PARAMS(params[0] / sizeof(cell));
 
-	// Textdraw kimliði oluþtur
+	// Textdraw kimliï¿½i oluï¿½tur
 	int auto_increment = slot_manager_global::get_id();
 
-	// Extra ID oluþtur
+	// Extra ID oluï¿½tur
 	std::map<int, int>* map = new std::map<int, int>();
 
-	// Array Data'yý oluþtur
+	// Array Data'yï¿½ oluï¿½tur
 	std::vector<int>* arr = new std::vector<int>();
 
-	// Textdraw verilerini oluþtur
+	// Textdraw verilerini oluï¿½tur
 	Text_Data* data			= new Text_Data();
+	data->amx				= amx;
 	data->real_id			= -1;
 	data->create_x			= amx_ctof(params[1]);
 	data->create_y			= amx_ctof(params[2]);
@@ -66,6 +67,7 @@ cell AMX_NATIVE_CALL Natives::CreateDynamicTextDraw(AMX* amx, cell* params)
 	data->extra_id			= map;
 	data->float_data		= 0.0;
 	data->array_data		= arr;
+	data->clickCallback		= 0;
 
 	// Verileri kaydet
 	GlobalText::gText->emplace(auto_increment, data);
@@ -511,7 +513,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawShowForPlayer(AMX* amx, cell* param
 	Plugin_Settings::file = service::getString(amx, params[3]);
 	Plugin_Settings::line = static_cast<int>(params[4]);
 
-	// Gösterilecek oyuncu sunucuda yoksa alt fonksiyonlarý çalýþtýrma
+	// Gï¿½sterilecek oyuncu sunucuda yoksa alt fonksiyonlarï¿½ ï¿½alï¿½ï¿½tï¿½rma
 	if (!IsPlayerConnected(playerid)) {
 		return 0;
 	}
@@ -595,7 +597,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawShowForAll(AMX* amx, cell* params)
 	Plugin_Settings::file = service::getString(amx, params[2]);
 	Plugin_Settings::line = static_cast<int>(params[3]);
 
-	// Sunucuda bir oyuncu yoksa bu fonksiyonu çalýþtýrmayý durdur
+	// Sunucuda bir oyuncu yoksa bu fonksiyonu ï¿½alï¿½ï¿½tï¿½rmayï¿½ durdur
 	if (GlobalText::PlayerList.empty()) {
 		return 0;
 	}
@@ -607,28 +609,28 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawShowForAll(AMX* amx, cell* params)
 		return 0;
 	}
 
-	// Aktif gözüken bir kullanýcý yoksa textdrawý yeniden oluþtur
+	// Aktif gï¿½zï¿½ken bir kullanï¿½cï¿½ yoksa textdrawï¿½ yeniden oluï¿½tur
 	if (GlobalText::gTextVisible[textid].empty())
 	{
-		// TextDraw'ý oluþtur
+		// TextDraw'ï¿½ oluï¿½tur
 		GlobalText::Reload(it);
 
-		// TextDraw oluþturulduysa
+		// TextDraw oluï¿½turulduysa
 		if (it->second->real_id != INVALID_DYNAMIC_PLAYER_TEXTDRAW)
 		{
-			// Tüm oyuncularý gözüküyor olarak ayarla
+			// Tï¿½m oyuncularï¿½ gï¿½zï¿½kï¿½yor olarak ayarla
 			for (std::unordered_set<int>::iterator p = GlobalText::PlayerList.begin(); p != GlobalText::PlayerList.end(); p++)
 			{
 				GlobalText::gTextVisible[textid][*p] = true;
 			}
 
-			// TextDrawý göster
+			// TextDrawï¿½ gï¿½ster
 			TextDrawShowForAll(it->second->real_id);
 		}
 	}
 	else
 	{
-		// Zaten gözüken oyuncu olduðu için gerçek kimlik ile tekrar göster
+		// Zaten gï¿½zï¿½ken oyuncu olduï¿½u iï¿½in gerï¿½ek kimlik ile tekrar gï¿½ster
 		TextDrawShowForAll(it->second->real_id);
 	}
 
@@ -654,10 +656,10 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawHideForAll(AMX* amx, cell* params)
 		return 0;
 	}
 	
-	// Tüm kullanýcýlarý sýfýrla
+	// Tï¿½m kullanï¿½cï¿½larï¿½ sï¿½fï¿½rla
 	GlobalText::gTextVisible[textid].clear();
 
-	// TextDraw'ý kaldýr
+	// TextDraw'ï¿½ kaldï¿½r
 	TextDrawDestroy(it->second->real_id);
 	it->second->real_id = INVALID_DYNAMIC_PLAYER_TEXTDRAW;
 
@@ -1261,6 +1263,36 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetPreviewVehicleColours(AMX* amx, 
 
 	service::setInt(amx, params[2], it->second->veh_col1);
 	service::setInt(amx, params[3], it->second->veh_col2);
+
+	return 1;
+}
+
+//
+// native DynamicTextDrawSetClick(Text:textid, const function[], const file[], line);
+//
+cell AMX_NATIVE_CALL Natives::DynamicTextDrawSetClickCallback(AMX* amx, cell* params)
+{
+	CHECK_PARAMS(4);
+
+	int textid = static_cast<int>(params[1]);
+
+	Plugin_Settings::file = service::getString(amx, params[3]);
+	Plugin_Settings::line = static_cast<int>(params[4]);
+
+	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
+	if (it == GlobalText::gText->end())
+	{
+		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		return 0;
+	}
+
+	std::string function = service::getString(amx, params[2]);
+
+	if (amx_FindPublic(amx, function.c_str(), &it->second->clickCallback) != AMX_ERR_NONE)
+	{
+		Plugin_Settings::ILogger(LogType::CALLBACK_NOT_FOUND, __func__, INVALID_PLAYER_ID, textid);
+		return 0;
+	}
 
 	return 1;
 }

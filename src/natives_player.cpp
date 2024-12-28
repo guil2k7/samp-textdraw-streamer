@@ -50,6 +50,7 @@ cell AMX_NATIVE_CALL Natives::CreateDynamicPlayerTextDraw(AMX* amx, cell* params
 
 		// PlayerData verilerini olustur
 		Text_Data* data = new Text_Data();
+		data->amx = amx;
 		data->real_id = -1;
 		data->create_x = amx_ctof(params[2]);
 		data->create_y = amx_ctof(params[3]);
@@ -78,6 +79,7 @@ cell AMX_NATIVE_CALL Natives::CreateDynamicPlayerTextDraw(AMX* amx, cell* params
 		data->extra_id = map;
 		data->float_data = 0.0;
 		data->array_data = arr;
+		data->clickCallback = 0;
 
 		// Veriyi pointera aktar
 		PlayerText::pText[playerid]->emplace(auto_increment, data);
@@ -933,6 +935,47 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawSetPreviewVehicleColours(AMX*
 
 	if (it->second->real_id != INVALID_DYNAMIC_PLAYER_TEXTDRAW) {
 		PlayerTextDrawSetPreviewVehCol(playerid, it->second->real_id, it->second->veh_col1, it->second->veh_col2);
+	}
+
+	return 1;
+}
+
+//
+// native DynamicPlayerTextDrawSetClick(playerid, PlayerText:textid, const function[], const file[], line);
+//
+cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawSetClickCallback(AMX* amx, cell* params)
+{
+	CHECK_PARAMS(5);
+
+	int playerid = static_cast<int>(params[1]);
+	int textid = static_cast<int>(params[2]);
+
+	if (GlobalText::PlayerList.find(playerid) == GlobalText::PlayerList.end()) {
+		return 0;
+	}
+
+	Plugin_Settings::file = service::getString(amx, params[4]);
+	Plugin_Settings::line = static_cast<int>(params[5]);
+
+	if (PlayerText::pText[playerid] == nullptr)
+	{
+		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		return 0;
+	}
+
+	auto it = PlayerText::pText[playerid]->find(textid);
+	if (it == PlayerText::pText[playerid]->end())
+	{
+		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		return 0;
+	}
+
+	std::string function = service::getString(amx, params[3]);
+
+	if (amx_FindPublic(amx, function.c_str(), &it->second->clickCallback) != AMX_ERR_NONE)
+	{
+		Plugin_Settings::ILogger(LogType::CALLBACK_NOT_FOUND, __func__, playerid, textid);
+		return 0;
 	}
 
 	return 1;
