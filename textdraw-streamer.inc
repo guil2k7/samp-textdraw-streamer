@@ -20,49 +20,49 @@
 #define _INC_textdraw_streamer
 
 /***
- *    888                       
- *    888                       
- *    888                       
- *    888      .d88b.   .d88b.  
- *    888     d88""88b d88P"88b 
- *    888     888  888 888  888 
- *    888     Y88..88P Y88b 888 
- *    88888888 "Y88P"   "Y88888 
- *                          888 
- *                     Y8b d88P 
- *                      "Y88P"  
+ *    888
+ *    888
+ *    888
+ *    888      .d88b.   .d88b.
+ *    888     d88""88b d88P"88b
+ *    888     888  888 888  888
+ *    888     Y88..88P Y88b 888
+ *    88888888 "Y88P"   "Y88888
+ *                          888
+ *                     Y8b d88P
+ *                      "Y88P"
  */
 
 public TDS_Enable_Log = true;
 #pragma unused TDS_Enable_Log
 
 /***
- *    88888888888                         
- *        888                             
- *        888                             
- *        888  888  888 88888b.   .d88b.  
- *        888  888  888 888 "88b d8P  Y8b 
- *        888  888  888 888  888 88888888 
- *        888  Y88b 888 888 d88P Y8b.     
- *        888   "Y88888 88888P"   "Y8888  
- *                  888 888               
- *             Y8b d88P 888               
- *              "Y88P"  888               
+ *    88888888888
+ *        888
+ *        888
+ *        888  888  888 88888b.   .d88b.
+ *        888  888  888 888 "88b d8P  Y8b
+ *        888  888  888 888  888 88888888
+ *        888  Y88b 888 888 d88P Y8b.
+ *        888   "Y88888 88888P"   "Y8888
+ *                  888 888
+ *             Y8b d88P 888
+ *              "Y88P"  888
  */
 
 #define	DYNAMIC_TEXTDRAW_TYPE_GLOBAL (DYNAMIC_TEXTDRAW_TYPE:0)
 #define	DYNAMIC_TEXTDRAW_TYPE_PLAYER (DYNAMIC_TEXTDRAW_TYPE:1)
 
 /***
- *     .d8888b.  888          888               888 
- *    d88P  Y88b 888          888               888 
- *    888    888 888          888               888 
- *    888        888  .d88b.  88888b.   8888b.  888 
- *    888  88888 888 d88""88b 888 "88b     "88b 888 
- *    888    888 888 888  888 888  888 .d888888 888 
- *    Y88b  d88P 888 Y88..88P 888 d88P 888  888 888 
- *     "Y8888P88 888  "Y88P"  88888P"  "Y888888 888 
- *                                                  
+ *     .d8888b.  888          888               888
+ *    d88P  Y88b 888          888               888
+ *    888    888 888          888               888
+ *    888        888  .d88b.  88888b.   8888b.  888
+ *    888  88888 888 d88""88b 888 "88b     "88b 888
+ *    888    888 888 888  888 888  888 .d888888 888
+ *    Y88b  d88P 888 Y88..88P 888 d88P 888  888 888
+ *     "Y8888P88 888  "Y88P"  88888P"  "Y888888 888
+ *
  */
 
 // General
@@ -110,7 +110,7 @@ native DynamicTextDrawGetAlignment_(Text:textid, const file[], line) = DynamicTe
 native DynamicTextDrawGetPreviewModel_(Text:textid, const file[], line) = DynamicTextDrawGetPreviewModel;
 native DynamicTextDrawGetPreviewRot_(Text:textid, &Float:rotationX, &Float:rotationY, &Float:rotationZ, &Float:zoom, const file[], line) = DynamicTextDrawGetPreviewRot;
 native DynamicTextDrawGetPreviewVehCo(Text:textid, &colour1, &colour2, const file[], line);
-native DynamicTextDrawSetClick(Text:textid, const function[], const file[], line);
+native DynamicTextDrawSetClick(Text:textid, const callback[], const specifiers[] = "", {Float,_}:...);
 
 // Get the real textdraw id shown
 native DynamicTextDrawGetRealID_(Text:textid, &Text:realid, const file[], line) = DynamicTextDrawGetRealID;
@@ -119,17 +119,17 @@ native DynamicTextDrawGetRealID_(Text:textid, &Text:realid, const file[], line) 
 native DynamicTextDrawGetSize();
 
 /***
- *    8888888b.  888                                    
- *    888   Y88b 888                                    
- *    888    888 888                                    
- *    888   d88P 888  8888b.  888  888  .d88b.  888d888 
- *    8888888P"  888     "88b 888  888 d8P  Y8b 888P"   
- *    888        888 .d888888 888  888 88888888 888     
- *    888        888 888  888 Y88b 888 Y8b.     888     
- *    888        888 "Y888888  "Y88888  "Y8888  888     
- *                                 888                  
- *                            Y8b d88P                  
- *                             "Y88P"                   
+ *    8888888b.  888
+ *    888   Y88b 888
+ *    888    888 888
+ *    888   d88P 888  8888b.  888  888  .d88b.  888d888
+ *    8888888P"  888     "88b 888  888 d8P  Y8b 888P"
+ *    888        888 .d888888 888  888 88888888 888
+ *    888        888 888  888 Y88b 888 Y8b.     888
+ *    888        888 "Y888888  "Y88888  "Y8888  888
+ *                                 888
+ *                            Y8b d88P
+ *                             "Y88P"
  */
 
 // General
@@ -153,7 +153,7 @@ native DynamicPlayerTextDrawSetString(playerid, PlayerText:textid, const format[
 native DynamicPlayerTextDrawSetPrevMdl(playerid, PlayerText:textid, model, const file[], line);
 native DynamicPlayerTextDrawSetPrevRot(playerid, PlayerText:textid, Float:rotationX, Float:rotationY, Float:rotationZ, Float:zoom = 1.0, const file[], line);
 native DynamicPlayerTextDrawPrevVehCol(playerid, PlayerText:textid, colour1, colour2, const file[], line);
-native DynamicPlayerTextDrawSetClick(playerid, PlayerText:textid, const function[], const file[], line);
+native DynamicPlayerTextDrawSetClick(playerid, PlayerText:textid, const callback[], const specifiers[] = "", {Float,_}:...);
 
 // YSF Functions (names changed to avoid open.mp conflicts)
 native IsValidDynamicPlayerTextDraw(playerid, PlayerText:textid);
@@ -184,40 +184,14 @@ native PlayerTextDrawGetRealID_(playerid, PlayerText:text, &PlayerText:realid, c
 native PlayerTextDrawGetSize(playerid);
 
 /***
- *    8888888b.           888             
- *    888  "Y88b          888             
- *    888    888          888             
- *    888    888  8888b.  888888  8888b.  
- *    888    888     "88b 888        "88b 
- *    888    888 .d888888 888    .d888888 
- *    888  .d88P 888  888 Y88b.  888  888 
- *    8888888P"  "Y888888  "Y888 "Y888888 
- *
- */
-
-// Int
-native DynamicTextDraw_SetIntData(DYNAMIC_TEXTDRAW_TYPE:type, {Text, PlayerText}:textid, index, value, playerid = -1);
-native DynamicTextDraw_GetIntData(DYNAMIC_TEXTDRAW_TYPE:type, {Text, PlayerText}:textid, index, playerid = -1);
-native DynamicTextDraw_ClearIntData(DYNAMIC_TEXTDRAW_TYPE:type, {Text, PlayerText}:textid, playerid = -1);
-
-// Float
-native DynamicTextDraw_SetFloatData(DYNAMIC_TEXTDRAW_TYPE:type, {Text, PlayerText}:textid, Float:value, playerid = -1);
-native Float:DynamicTextDraw_GetFloatData(DYNAMIC_TEXTDRAW_TYPE:type, {Text, PlayerText}:textid, playerid = -1);
-
-// Array
-native DynamicTextDraw_SetArrayData(DYNAMIC_TEXTDRAW_TYPE:type, {Text, PlayerText}:textid, const src[], playerid = -1, maxSrc = sizeof(src));
-native DynamicTextDraw_GetArrayData(DYNAMIC_TEXTDRAW_TYPE:type, {Text, PlayerText}:textid, const dest[], playerid = -1, maxDest = sizeof(dest));
-native DynamicTextDraw_ClearArrayData(DYNAMIC_TEXTDRAW_TYPE:type, {Text, PlayerText}:textid, playerid = -1);
-
-/***
- *     .d8888b.           888 888 888                        888               
- *    d88P  Y88b          888 888 888                        888               
- *    888    888          888 888 888                        888               
- *    888         8888b.  888 888 88888b.   8888b.   .d8888b 888  888 .d8888b  
- *    888            "88b 888 888 888 "88b     "88b d88P"    888 .88P 88K      
- *    888    888 .d888888 888 888 888  888 .d888888 888      888888K  "Y8888b. 
- *    Y88b  d88P 888  888 888 888 888 d88P 888  888 Y88b.    888 "88b      X88 
- *     "Y8888P"  "Y888888 888 888 88888P"  "Y888888  "Y8888P 888  888  88888P' 
+ *     .d8888b.           888 888 888                        888
+ *    d88P  Y88b          888 888 888                        888
+ *    888    888          888 888 888                        888
+ *    888         8888b.  888 888 88888b.   8888b.   .d8888b 888  888 .d8888b
+ *    888            "88b 888 888 888 "88b     "88b d88P"    888 .88P 88K
+ *    888    888 .d888888 888 888 888  888 .d888888 888      888888K  "Y8888b.
+ *    Y88b  d88P 888  888 888 888 888 d88P 888  888 Y88b.    888 "88b      X88
+ *     "Y8888P"  "Y888888 888 888 88888P"  "Y888888  "Y8888P 888  888  88888P'
  *
  */
 
@@ -231,15 +205,15 @@ forward OnClickDynamicTextDraw(playerid, Text:textid);
 forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 
 /***
- *    888    888                   888                                 .d8888b.  888          888               888 
- *    888    888                   888                                d88P  Y88b 888          888               888 
- *    888    888                   888                                888    888 888          888               888 
- *    8888888888  .d88b.   .d88b.  888  888 .d8888b                   888        888  .d88b.  88888b.   8888b.  888 
- *    888    888 d88""88b d88""88b 888 .88P 88K                       888  88888 888 d88""88b 888 "88b     "88b 888 
- *    888    888 888  888 888  888 888888K  "Y8888b.      888888      888    888 888 888  888 888  888 .d888888 888 
- *    888    888 Y88..88P Y88..88P 888 "88b      X88                  Y88b  d88P 888 Y88..88P 888 d88P 888  888 888 
- *    888    888  "Y88P"   "Y88P"  888  888  88888P'                   "Y8888P88 888  "Y88P"  88888P"  "Y888888 888 
- *                                                                                                                  
+ *    888    888                   888                                 .d8888b.  888          888               888
+ *    888    888                   888                                d88P  Y88b 888          888               888
+ *    888    888                   888                                888    888 888          888               888
+ *    8888888888  .d88b.   .d88b.  888  888 .d8888b                   888        888  .d88b.  88888b.   8888b.  888
+ *    888    888 d88""88b d88""88b 888 .88P 88K                       888  88888 888 d88""88b 888 "88b     "88b 888
+ *    888    888 888  888 888  888 888888K  "Y8888b.      888888      888    888 888 888  888 888  888 .d888888 888
+ *    888    888 Y88..88P Y88..88P 888 "88b      X88                  Y88b  d88P 888 Y88..88P 888 d88P 888  888 888
+ *    888    888  "Y88P"   "Y88P"  888  888  88888P'                   "Y8888P88 888  "Y88P"  88888P"  "Y888888 888
+ *
  */
 
 /*******************************************************************************/
@@ -432,20 +406,193 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 	#endif
 	#define TextDrawSetPreviewVehCol(%0,%1,%2) DynamicTextDrawSetPreviewVehCol(%0, %1, %2, __file, __line)
 #endif
+
+/*******************************************************************************/
+#if defined _ALS_IsTextDrawVisibleForPlayer
+	#undef IsTextDrawVisibleForPlayer
+#else
+	#define _ALS_IsTextDrawVisibleForPlayer
+#endif
+#define IsTextDrawVisibleForPlayer(%0,%1) IsDynTextDrawVisibleForPlayer_(%0,%1, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_TextDrawSetPos
+	#undef TextDrawSetPos
+#else
+	#define _ALS_TextDrawSetPos
+#endif
+#define TextDrawSetPos(%0,%1,%2) DynamicTextDrawSetPos(%0,%1,%2, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_TextDrawGetLetterSize
+	#undef TextDrawGetLetterSize
+#else
+	#define _ALS_TextDrawGetLetterSize
+#endif
+#define TextDrawGetLetterSize(%0,%1,%2) DynamicTextDrawGetLetterSize(%0,%1,%2, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_TextDrawGetTextSize
+	#undef TextDrawGetTextSize
+#else
+	#define _ALS_TextDrawGetTextSize
+#endif
+#define TextDrawGetTextSize(%0,%1,%2) DynamicTextDrawGetTextSize(%0,%1,%2, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_TextDrawGetPos
+	#undef TextDrawGetPos
+#else
+	#define _ALS_TextDrawGetPos
+#endif
+#define TextDrawGetPos(%0,%1,%2) DynamicTextDrawGetPos(%0,%1,%2, __file, __line)
+
+/*******************************************************************************/
+#if defined _INC_omp_textdraw
+	#if defined _ALS_TextDrawGetColour
+		#undef TextDrawGetColour
+	#else
+		#define _ALS_TextDrawGetColour
+	#endif
+	#define TextDrawGetColour(%0) DynamicTextDrawGetColour(%0, __file, __line)
+#else
+	#define TextDrawGetColor(%0) DynamicTextDrawGetColour(%0, __file, __line)
+#endif
+
+/*******************************************************************************/
+#if defined _INC_omp_textdraw
+	#if defined _ALS_TextDrawGetBoxColour
+		#undef TextDrawGetBoxColour
+	#else
+		#define _ALS_TextDrawGetBoxColour
+	#endif
+	#define TextDrawGetBoxColour(%0) DynamicTextDrawGetBoxColour(%0, __file, __line)
+#else
+	#define TextDrawGetBoxColor(%0) DynamicTextDrawGetBoxColour(%0, __file, __line)
+#endif
+
+/*******************************************************************************/
+#if defined _INC_omp_textdraw
+	#if defined _ALS_TextDrawGetBackgroundColour
+		#undef TextDrawGetBackgroundColour
+	#else
+		#define _ALS_TextDrawGetBackgroundColour
+	#endif
+	#define TextDrawGetBackgroundColour(%0) DynamicTextDrawGetBackgroundCo(%0, __file, __line)
+#else
+	#define TextDrawGetBackgroundColor(%0) DynamicTextDrawGetBackgroundCo(%0, __file, __line)
+#endif
+
+/*******************************************************************************/
+#if defined _ALS_TextDrawGetShadow
+	#undef TextDrawGetShadow
+#else
+	#define _ALS_TextDrawGetShadow
+#endif
+#define TextDrawGetShadow(%0) DynamicTextDrawGetShadow(%0, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_TextDrawGetOutline
+	#undef TextDrawGetOutline
+#else
+	#define _ALS_TextDrawGetOutline
+#endif
+#define TextDrawGetOutline(%0) DynamicTextDrawGetOutline(%0, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_TextDrawGetFont
+	#undef TextDrawGetFont
+#else
+	#define _ALS_TextDrawGetFont
+#endif
+#define TextDrawGetFont(%0) DynamicTextDrawGetFont(%0, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_TextDrawIsBox
+	#undef TextDrawIsBox
+#else
+	#define _ALS_TextDrawIsBox
+#endif
+#define TextDrawIsBox(%0) DynamicTextDrawIsBox(%0, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_TextDrawIsProportional
+	#undef TextDrawIsProportional
+#else
+	#define _ALS_TextDrawIsProportional
+#endif
+#define TextDrawIsProportional(%0) DynamicTextDrawIsProportional(%0, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_TextDrawIsSelectable
+	#undef TextDrawIsSelectable
+#else
+	#define _ALS_TextDrawIsSelectable
+#endif
+#define TextDrawIsSelectable(%0) DynamicTextDrawIsSelectable(%0, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_TextDrawGetAlignment
+	#undef TextDrawGetAlignment
+#else
+	#define _ALS_TextDrawGetAlignment
+#endif
+#define TextDrawGetAlignment(%0) DynamicTextDrawGetAlignment(%0, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_TextDrawGetPreviewModel
+	#undef TextDrawGetPreviewModel
+#else
+	#define _ALS_TextDrawGetPreviewModel
+#endif
+#define TextDrawGetPreviewModel(%0) DynamicTextDrawGetPreviewModel(%0, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_TextDrawGetPreviewRot
+	#undef TextDrawGetPreviewRot
+#else
+	#define _ALS_TextDrawGetPreviewRot
+#endif
+#define TextDrawGetPreviewRot(%0,%1,%2,%3,%4) DynamicTextDrawGetPreviewRot(%0,%1,%2,%3,%4, __file, __line)
+
+/*******************************************************************************/
+#if __namemax > 31
+	#if defined _ALS_TextDrawGetPreviewVehicleColours
+		#undef TextDrawGetPreviewVehicleColours
+	#else
+		#define _ALS_TextDrawGetPreviewVehicleColours
+	#endif
+	#define TextDrawGetPreviewVehicleColours(%0,%1,%2) DynamicTextDrawGetPreviewVehCo(%0,%1,%2, __file, __line)
+#else
+	#if defined _ALS_TextDrawGetPreviewVehCol
+		#undef TextDrawGetPreviewVehCol
+	#else
+		#define _ALS_TextDrawGetPreviewVehCol
+	#endif
+	#define TextDrawGetPreviewVehCol(%0,%1,%2) DynamicTextDrawGetPreviewVehCo(%0,%1,%2, __file, __line)
+#endif
+/*******************************************************************************/
+#if defined _ALS_TextDrawSetClick
+	#undef TextDrawSetClick
+#else
+	#define _ALS_TextDrawSetClick
+#endif
+#define TextDrawSetClick DynamicTextDrawSetClick
+
 /*******************************************************************************/
 
 /***
- *    888    888                   888                                8888888b.  888                                    
- *    888    888                   888                                888   Y88b 888                                    
- *    888    888                   888                                888    888 888                                    
- *    8888888888  .d88b.   .d88b.  888  888 .d8888b                   888   d88P 888  8888b.  888  888  .d88b.  888d888 
- *    888    888 d88""88b d88""88b 888 .88P 88K                       8888888P"  888     "88b 888  888 d8P  Y8b 888P"   
- *    888    888 888  888 888  888 888888K  "Y8888b.      888888      888        888 .d888888 888  888 88888888 888     
- *    888    888 Y88..88P Y88..88P 888 "88b      X88                  888        888 888  888 Y88b 888 Y8b.     888     
- *    888    888  "Y88P"   "Y88P"  888  888  88888P'                  888        888 "Y888888  "Y88888  "Y8888  888     
- *                                                                                                 888                  
- *                                                                                            Y8b d88P                  
- *                                                                                             "Y88P"                   
+ *    888    888                   888                                8888888b.  888
+ *    888    888                   888                                888   Y88b 888
+ *    888    888                   888                                888    888 888
+ *    8888888888  .d88b.   .d88b.  888  888 .d8888b                   888   d88P 888  8888b.  888  888  .d88b.  888d888
+ *    888    888 d88""88b d88""88b 888 .88P 88K                       8888888P"  888     "88b 888  888 d8P  Y8b 888P"
+ *    888    888 888  888 888  888 888888K  "Y8888b.      888888      888        888 .d888888 888  888 88888888 888
+ *    888    888 Y88..88P Y88..88P 888 "88b      X88                  888        888 888  888 Y88b 888 Y8b.     888
+ *    888    888  "Y88P"   "Y88P"  888  888  88888P'                  888        888 "Y888888  "Y88888  "Y8888  888
+ *                                                                                                 888
+ *                                                                                            Y8b d88P
+ *                                                                                             "Y88P"
  */
 
 /*******************************************************************************/
@@ -634,60 +781,178 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 	#define PlayerTextDrawSetPreviewVehCol(%0,%1,%2,%3) DynamicPlayerTextDrawPrevVehCol(%0, %1, %2, %3, __file, __line)
 #endif
 
-/***
- *    888                            8888888888                                      888    
- *    888                            888                                             888    
- *    888                            888                                             888    
- *    888      .d88b.   .d88b.       8888888  .d88b.  888d888 88888b.d88b.   8888b.  888888 
- *    888     d88""88b d88P"88b      888     d88""88b 888P"   888 "888 "88b     "88b 888    
- *    888     888  888 888  888      888     888  888 888     888  888  888 .d888888 888    
- *    888     Y88..88P Y88b 888      888     Y88..88P 888     888  888  888 888  888 Y88b.  
- *    88888888 "Y88P"   "Y88888      888      "Y88P"  888     888  888  888 "Y888888  "Y888 
- *                          888                                                             
- *                     Y8b d88P                                                             
- *                      "Y88P"                                                              
- */
+/*******************************************************************************/
+#if defined _ALS_IsPlayerTextDrawVisible
+	#undef IsPlayerTextDrawVisible
+#else
+	#define _ALS_IsPlayerTextDrawVisible
+#endif
+#define IsPlayerTextDrawVisible(%0,%1) IsDynamicPlayerTextDrawVisible_(%0,%1, __file, __line)
 
-// Global
-#define IsDynTextDrawVisibleForPlayer(%0,%1)				IsDynTextDrawVisibleForPlayer_(%0, %1, __file, __line)
-#define DynamicTextDrawSetPos(%0,%1,%2)						DynamicTextDrawSetPos_(%0, %1, %2, __file, __line)
-#define DynamicTextDrawGetLetterSize(%0,%1,%2)				DynamicTextDrawGetLetterSize_(%0, %1, %2, __file, __line)
-#define DynamicTextDrawGetTextSize(%0,%1,%2)				DynamicTextDrawGetTextSize_(%0, %1, %2, __file, __line)
-#define DynamicTextDrawGetPos(%0,%1,%2)						DynamicTextDrawGetPos_(%0, %1, %2, __file, __line)
-#define DynamicTextDrawGetColour(%0)						DynamicTextDrawGetColour_(%0, __file, __line)
-#define DynamicTextDrawGetBoxColour(%0)						DynamicTextDrawGetBoxColour_(%0, __file, __line)
-#define DynamicTextDrawGetBackgroundCol(%0)					DynamicTextDrawGetBackgroundCo(%0, __file, __line)
-#define DynamicTextDrawGetShadow(%0)						DynamicTextDrawGetShadow_(%0, __file, __line)
-#define DynamicTextDrawGetOutline(%0)						DynamicTextDrawGetOutline_(%0, __file, __line)
-#define DynamicTextDrawGetFont(%0)							DynamicTextDrawGetFont_(%0, __file, __line)
-#define DynamicTextDrawIsBox(%0)							DynamicTextDrawIsBox_(%0, __file, __line)
-#define DynamicTextDrawIsProportional(%0)					DynamicTextDrawIsProportional_(%0, __file, __line)
-#define DynamicTextDrawIsSelectable(%0)						DynamicTextDrawIsSelectable_(%0, __file, __line)
-#define DynamicTextDrawGetAlignment(%0)						DynamicTextDrawGetAlignment_(%0, __file, __line)
-#define DynamicTextDrawGetPreviewModel(%0)					DynamicTextDrawGetPreviewModel_(%0, __file, __line)
-#define DynamicTextDrawGetPreviewRot(%0,%1,%2,%3,%4)		DynamicTextDrawGetPreviewRot_(%0, %1, %2, %3, %4, __file, __line)
-#define DynamicTextDrawGetPreviewVehCol(%0,%1,%2)			DynamicTextDrawGetPreviewVehCo(%0, %1, %2, __file, __line)
-#define DynamicTextDrawGetRealID(%0,%1)						DynamicTextDrawGetRealID_(%0, %1, __file, __line)
-#define TextDrawSetClick(%0,%1)								DynamicTextDrawSetClick(%0, %1, __file, __line)
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawSetPos
+	#undef PlayerTextDrawSetPos
+#else
+	#define _ALS_PlayerTextDrawSetPos
+#endif
+#define PlayerTextDrawSetPos(%0,%1,%2,%3) DynamicPlayerTextDrawSetPos(%0,%1,%2,%3, __file, __line)
 
-// Player
-#define IsDynamicPlayerTextDrawVisible(%0,%1)				IsDynamicPlayerTextDrawVisible_(%0, %1, __file, __line)
-#define DynamicPlayerTextDrawSetPos(%0,%1,%2,%3)			DynamicPlayerTextDrawSetPos_(%0, %1, %2, %3, __file, __line)
-#define DynPlayerTextDrawGetLetterSize(%0,%1,%2,%3)			DynPlayerTextDrawGetLetterSize_(%0, %1, %2, %3, __file, __line)
-#define DynPlayerTextDrawGetTextSize(%0,%1,%2,%3)			DynPlayerTextDrawGetTextSize_(%0, %1, %2, %3, __file, __line)
-#define DynamicPlayerTextDrawGetPos(%0,%1,%2,%3)			DynamicPlayerTextDrawGetPos_(%0, %1, %2, %3, __file, __line)
-#define DynamicPlayerTextDrawGetColour(%0,%1)				DynamicPlayerTextDrawGetColour_(%0, %1, __file, __line)
-#define DynamicPlayerTextDrawGetBoxCol(%0,%1)				DynamicPlayerTextDrawGetBoxCol_(%0, %1, __file, __line)
-#define DynPlayerTextDrawGetBGColour(%0,%1)					DynPlayerTextDrawGetBGColour_(%0, %1, __file, __line)
-#define DynamicPlayerTextDrawGetShadow(%0,%1)				DynamicPlayerTextDrawGetShadow_(%0, %1, __file, __line)
-#define DynamicPlayerTextDrawGetOutline(%0,%1)				DynamicPlayerTextDrawGetOutlin_(%0, %1, __file, __line)
-#define DynamicPlayerTextDrawGetFont(%0,%1)					DynamicPlayerTextDrawGetFont_(%0, %1, __file, __line)
-#define DynamicPlayerTextDrawIsBox(%0,%1)					DynamicPlayerTextDrawIsBox_(%0, %1, __file, __line)
-#define DynPlayerTextDrawIsProportional(%0,%1)				DynPlayerTextDrawIsProportiona_(%0, %1, __file, __line)
-#define DynPlayerTextDrawIsSelectable(%0,%1)				DynPlayerTextDrawIsSelectable_(%0, %1, __file, __line)
-#define DynPlayerTextDrawGetAlignment(%0,%1)				DynPlayerTextDrawGetAlignment_(%0, %1, __file, __line)
-#define DynPlayerTextDrawGetPreviewMdl(%0,%1)				DynPlayerTextDrawGetPreviewMdl_(%0, %1, __file, __line)
-#define DynPlayerTextDrawGetPreviewRot(%0,%1,%2,%3,%4,%5)	DynPlayerTextDrawGetPreviewRot_(%0, %1, %2, %3, %4, %5, __file, __line)
-#define DynPlayerTextDrawGetPrevVehCol(%0,%1,%2,%3)			DynPlayerTextDrawGetPrevVehCol_(%0, %1, %2, %3, __file, __line)
-#define PlayerTextDrawGetRealID(%0,%1,%2)					PlayerTextDrawGetRealID_(%0, %1, %2, __file, __line)
-#define PlayerTextDrawSetClick(%0,%1,%2)					DynamicPlayerTextDrawSetClick(%0, %1, %2, __file, __line)
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawGetLetterSize
+	#undef PlayerTextDrawGetLetterSize
+#else
+	#define _ALS_PlayerTextDrawGetLetterSize
+#endif
+#define PlayerTextDrawGetLetterSize(%0,%1,%2,%3) DynPlayerTextDrawGetLetterSize(%0,%1,%2,%3, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawGetTextSize
+	#undef PlayerTextDrawGetTextSize
+#else
+	#define _ALS_PlayerTextDrawGetTextSize
+#endif
+#define PlayerTextDrawGetTextSize(%0,%1,%2,%3) DynPlayerTextDrawGetTextSize(%0,%1,%2,%3, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawGetPos
+	#undef PlayerTextDrawGetPos
+#else
+	#define _ALS_PlayerTextDrawGetPos
+#endif
+#define PlayerTextDrawGetPos(%0,%1,%2,%3) DynamicPlayerTextDrawGetPos(%0,%1,%2,%3, __file, __line)
+
+/*******************************************************************************/
+#if defined _INC_omp_textdraw
+	#if defined _ALS_PlayerTextDrawGetColour
+		#undef PlayerTextDrawGetColour
+	#else
+		#define _ALS_PlayerTextDrawGetColour
+	#endif
+	#define PlayerTextDrawGetColour(%0,%1) DynamicPlayerTextDrawGetColour_(%0,%1, __file, __line)
+#else
+	#define PlayerTextDrawGetColor(%0,%1) DynamicPlayerTextDrawGetColour_(%0,%1, __file, __line)
+#endif
+
+/*******************************************************************************/
+#if defined _INC_omp_textdraw
+	#if defined _ALS_PlayerTextDrawGetBoxColour
+		#undef PlayerTextDrawGetBoxColour
+	#else
+		#define _ALS_PlayerTextDrawGetBoxColour
+	#endif
+	#define PlayerTextDrawGetBoxColour(%0,%1) DynamicPlayerTextDrawGetBoxCol(%0,%1, __file, __line)
+#else
+	#define PlayerTextDrawGetBoxColor(%0,%1) DynamicPlayerTextDrawGetBoxCol(%0,%1, __file, __line)
+#endif
+
+/*******************************************************************************/
+#if __namemax > 31
+	#if defined _ALS_PlayerTextDrawGetBackgroundColour
+		#undef PlayerTextDrawGetBackgroundColour
+	#else
+		#define _ALS_PlayerTextDrawGetBackgroundColour
+	#endif
+	#define PlayerTextDrawGetBackgroundColour(%0,%1) DynPlayerTextDrawGetBGColour(%0,%1, __file, __line)
+#else
+	#if defined _ALS_PlayerTextDrawGetBackgroundCol
+		#undef PlayerTextDrawGetBackgroundCol
+	#else
+		#define _ALS_PlayerTextDrawGetBackgroundCol
+	#endif
+	#define PlayerTextDrawGetBackgroundCol(%0,%1) DynPlayerTextDrawGetBGColour(%0,%1, __file, __line)
+#endif
+
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawGetShadow
+	#undef PlayerTextDrawGetShadow
+#else
+	#define _ALS_PlayerTextDrawGetShadow
+#endif
+#define PlayerTextDrawGetShadow(%0,%1) DynamicPlayerTextDrawGetShadow(%0,%1, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawGetOutline
+	#undef PlayerTextDrawGetOutline
+#else
+	#define _ALS_PlayerTextDrawGetOutline
+#endif
+#define PlayerTextDrawGetOutline(%0,%1) DynamicPlayerTextDrawGetOutline(%0,%1, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawGetFont
+	#undef PlayerTextDrawGetFont
+#else
+	#define _ALS_PlayerTextDrawGetFont
+#endif
+#define PlayerTextDrawGetFont(%0,%1) DynamicPlayerTextDrawGetFont(%0,%1, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawIsBox
+	#undef PlayerTextDrawIsBox
+#else
+	#define _ALS_PlayerTextDrawIsBox
+#endif
+#define PlayerTextDrawIsBox(%0,%1) DynamicPlayerTextDrawIsBox(%0,%1, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawIsProportional
+	#undef PlayerTextDrawIsProportional
+#else
+	#define _ALS_PlayerTextDrawIsProportional
+#endif
+#define PlayerTextDrawIsProportional(%0,%1) DynPlayerTextDrawIsProportional(%0,%1, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawIsSelectable
+	#undef PlayerTextDrawIsSelectable
+#else
+	#define _ALS_PlayerTextDrawIsSelectable
+#endif
+#define PlayerTextDrawIsSelectable(%0,%1) DynPlayerTextDrawIsSelectable(%0,%1, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawGetAlignment
+	#undef PlayerTextDrawGetAlignment
+#else
+	#define _ALS_PlayerTextDrawGetAlignment
+#endif
+#define PlayerTextDrawGetAlignment(%0,%1) DynPlayerTextDrawGetAlignment(%0,%1, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawGetPreviewModel
+	#undef PlayerTextDrawGetPreviewModel
+#else
+	#define _ALS_PlayerTextDrawGetPreviewModel
+#endif
+#define PlayerTextDrawGetPreviewModel(%0,%1) DynPlayerTextDrawGetPreviewMdl(%0,%1, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawGetPreviewRot
+	#undef PlayerTextDrawGetPreviewRot
+#else
+	#define _ALS_PlayerTextDrawGetPreviewRot
+#endif
+#define PlayerTextDrawGetPreviewRot(%0,%1,%2,%3,%4,%5) DynPlayerTextDrawGetPreviewRot(%0,%1,%2,%3,%4,%, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawGetPreviewVehCol
+	#undef PlayerTextDrawGetPreviewVehCol
+#else
+	#define _ALS_PlayerTextDrawGetPreviewVehCol
+#endif
+#define PlayerTextDrawGetPreviewVehCol(%0,%1,%2,%3) DynPlayerTextDrawGetPrevVehCol(%0,%1,%2,%3, __file, __line)
+
+/*******************************************************************************/
+#if defined _ALS_PlayerTextDrawSetClick
+	#undef PlayerTextDrawSetClick
+#else
+	#define _ALS_PlayerTextDrawSetClick
+#endif
+#define PlayerTextDrawSetClick DynamicPlayerTextDrawSetClick
+
+/* ================================================================ */
+/* ================================================================ */
+/* ================================================================ */
+
+#define DynamicTextDrawGetRealID(%0,%1) DynamicTextDrawGetRealID_(%0, %1, __file, __line)
+#define PlayerTextDrawGetRealID(%0,%1,%2) PlayerTextDrawGetRealID_(%0, %1, %2, __file, __line)

@@ -66,7 +66,6 @@ cell AMX_NATIVE_CALL Natives::CreateDynamicTextDraw(AMX* amx, cell* params)
 	data->veh_col2			= -2;
 	data->extra_id			= map;
 	data->float_data		= 0.0;
-	data->array_data		= arr;
 	data->clickCallback		= 0;
 
 	// Verileri kaydet
@@ -90,7 +89,7 @@ cell AMX_NATIVE_CALL Natives::DestroyDynamicTextDraw(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -107,9 +106,6 @@ cell AMX_NATIVE_CALL Natives::DestroyDynamicTextDraw(AMX* amx, cell* params)
 
 	// Extra Id
 	delete it->second->extra_id;
-
-	// Array Data
-	delete it->second->array_data;
 
 	// Text data
 	delete it->second;
@@ -139,7 +135,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawLetterSize(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -174,7 +170,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawTextSize(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -206,7 +202,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawAlignment(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -237,7 +233,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawColour(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -268,7 +264,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawUseBox(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -299,7 +295,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawBoxColour(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -330,7 +326,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawSetShadow(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -361,7 +357,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawSetOutline(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -392,7 +388,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawBackgroundColour(AMX* amx, cell* pa
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -423,7 +419,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawFont(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -454,7 +450,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawSetProportional(AMX* amx, cell* par
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -485,7 +481,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawSetSelectable(AMX* amx, cell* param
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -521,7 +517,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawShowForPlayer(AMX* amx, cell* param
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -563,7 +559,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawHideForPlayer(AMX* amx, cell* param
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -605,7 +601,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawShowForAll(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -652,7 +648,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawHideForAll(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 	
@@ -678,7 +674,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawSetString(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -709,7 +705,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawSetPreviewModel(AMX* amx, cell* par
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -745,7 +741,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawSetPreviewRot(AMX* amx, cell* param
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -780,7 +776,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawSetPreviewVehicleColours(AMX* amx, 
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -822,7 +818,7 @@ cell AMX_NATIVE_CALL Natives::IsDynamicTextDrawVisibleForPlayer(AMX* amx, cell* 
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -847,7 +843,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetString(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -875,7 +871,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawSetPos(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -913,7 +909,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetLetterSize(AMX* amx, cell* param
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -938,7 +934,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetTextSize(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -963,7 +959,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetPos(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -988,7 +984,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetColour(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -1010,7 +1006,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetBoxColour(AMX* amx, cell* params
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -1032,7 +1028,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetBackgroundColour(AMX* amx, cell*
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -1054,7 +1050,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetShadow(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -1076,7 +1072,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetOutline(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -1098,7 +1094,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetFont(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -1120,7 +1116,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawIsBox(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -1142,7 +1138,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawIsProportional(AMX* amx, cell* para
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -1164,7 +1160,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawIsSelectable(AMX* amx, cell* params
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -1186,7 +1182,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetAlignment(AMX* amx, cell* params
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -1208,7 +1204,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetPreviewModel(AMX* amx, cell* par
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -1230,7 +1226,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetPreviewRot(AMX* amx, cell* param
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 	
@@ -1257,7 +1253,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetPreviewVehicleColours(AMX* amx, 
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
@@ -1268,29 +1264,40 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetPreviewVehicleColours(AMX* amx, 
 }
 
 //
-// native DynamicTextDrawSetClick(Text:textid, const function[], const file[], line);
+// native DynamicTextDrawSetClick(Text:textid, const callback[], const specifiers[], {Float,_}:...);
 //
 cell AMX_NATIVE_CALL Natives::DynamicTextDrawSetClickCallback(AMX* amx, cell* params)
 {
-	CHECK_PARAMS(4);
+	if (3 * sizeof (cell) > params[0]) {
+		sampgdk::logprintf("%s: Expecting >= 3 parameter(s), but found %d.", __func__, params[0] / sizeof(cell));
+		return 0; 
+	}
 
 	int textid = static_cast<int>(params[1]);
-
-	Plugin_Settings::file = service::getString(amx, params[3]);
-	Plugin_Settings::line = static_cast<int>(params[4]);
 
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 
-	std::string function = service::getString(amx, params[2]);
+	std::string callback = service::getString(amx, params[2]);
 
-	if (amx_FindPublic(amx, function.c_str(), &it->second->clickCallback) != AMX_ERR_NONE)
+	if (amx_FindPublic(amx, callback.c_str(), &it->second->clickCallback) != AMX_ERR_NONE)
 	{
-		Plugin_Settings::ILogger(LogType::CALLBACK_NOT_FOUND, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FunctionNotFound, __func__, INVALID_PLAYER_ID, textid);
+		return 0;
+	}
+
+	ErrorID error = service::parseVariadicArgs(amx, params, 3, 4, it->second->userData);
+
+	if (error != ErrorID::None) {
+		it->second->clickCallback = 0;
+		it->second->userData.clear();
+
+		Plugin_Settings::ILogger(error, __func__, INVALID_PLAYER_ID, textid);
+
 		return 0;
 	}
 
@@ -1314,7 +1321,7 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawGetRealID(AMX* amx, cell* params)
 	std::unordered_map<int, Text_Data*>::iterator it = GlobalText::gText->find(textid);
 	if (it == GlobalText::gText->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_GLOBAL_TEXT, __func__, INVALID_PLAYER_ID, textid);
+		Plugin_Settings::ILogger(ErrorID::FindGlobalText, __func__, INVALID_PLAYER_ID, textid);
 		return 0;
 	}
 

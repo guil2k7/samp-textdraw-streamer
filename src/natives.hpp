@@ -119,20 +119,6 @@ namespace Natives
 	cell AMX_NATIVE_CALL PlayerTextDrawGetRealID(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL PlayerTextDrawGetSize(AMX* amx, cell* params);
 
-	// Data (Int)
-	cell AMX_NATIVE_CALL DynamicTextDraw_SetIntData(AMX* amx, cell* params);
-	cell AMX_NATIVE_CALL DynamicTextDraw_GetIntData(AMX* amx, cell* params);
-	cell AMX_NATIVE_CALL DynamicTextDraw_ClearIntData(AMX* amx, cell* params);
-
-	// Data (Float)
-	cell AMX_NATIVE_CALL DynamicTextDraw_SetFloatData(AMX* amx, cell* params);
-	cell AMX_NATIVE_CALL DynamicTextDraw_GetFloatData(AMX* amx, cell* params);
-
-	// Data (Array)
-	cell AMX_NATIVE_CALL DynamicTextDraw_SetArrayData(AMX* amx, cell* params);
-	cell AMX_NATIVE_CALL DynamicTextDraw_GetArrayData(AMX* amx, cell* params);
-	cell AMX_NATIVE_CALL DynamicTextDraw_ClearArrayData(AMX* amx, cell* params);
-
 	// Logger
 	cell AMX_NATIVE_CALL TDLogger(AMX* amx, cell* params);
 };

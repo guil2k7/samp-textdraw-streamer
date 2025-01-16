@@ -47,9 +47,6 @@ void GlobalText::Destroy()
 			// Extra id
 			delete it->second->extra_id;
 			
-			// Array data
-			delete it->second->array_data;
-			
 			// Text data
 			delete it->second;
 		}
@@ -170,9 +167,6 @@ void PlayerText::Destroy(int playerid)
 			// Extra id kaldir
 			delete p->second->extra_id;
 
-			// Array verilerini kaldir
-			delete p->second->array_data;
-
 			// Data daki verileri kaldir
 			delete p->second;
 		}
@@ -197,9 +191,6 @@ void PlayerText::Destroy(int playerid)
 			{
 				// Extra id kaldir
 				delete p->second->extra_id;
-
-				// Array verilerini kaldir
-				delete p->second->array_data;
 
 				// Data daki verileri kaldir
 				delete p->second;

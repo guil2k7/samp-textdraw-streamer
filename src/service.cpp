@@ -16,6 +16,7 @@
 
 #include "service.hpp"
 #include "fmt/printf.h"
+#include "textdraw_data.hpp"
 
 void service::setInt(AMX* amx, cell output, int value)
 {
@@ -53,31 +54,31 @@ std::string service::getString(AMX* amx, cell param)
 
 std::string service::formattedString(AMX* amx, cell* params, cell text_index, int32_t args_offset)
 {
-	// Argüman sayýsýný al
+	// Argï¿½man sayï¿½sï¿½nï¿½ al
 	int max_args = params[0] / sizeof(cell);
 
 	// Formatlanacak metini al
 	std::string metin = getString(amx, params[text_index]);
 
-	// Argüman sayýsý offset sayýsýna ulaþýyor ve geçiyorsa formatlama aþamasýna geç
+	// Argï¿½man sayï¿½sï¿½ offset sayï¿½sï¿½na ulaï¿½ï¿½yor ve geï¿½iyorsa formatlama aï¿½amasï¿½na geï¿½
 	if (max_args >= args_offset)
 	{
-		// Metini tarayacak index deðerimiz
+		// Metini tarayacak index deï¿½erimiz
 		size_t index = 0;
 
-		// Argümanýn baþlangýç offsetini ayarla
+		// Argï¿½manï¿½n baï¿½langï¿½ï¿½ offsetini ayarla
 		int args_count = args_offset;
 
-		// Döngü ile metinleri tara
+		// Dï¿½ngï¿½ ile metinleri tara
 		while (index < metin.length())
 		{
-			// Taranan metinde % karakteri var mý?
+			// Taranan metinde % karakteri var mï¿½?
 			if (metin[index] == '%')
 			{
-				// Varsa index deðerini +1 olarak arttýr
+				// Varsa index deï¿½erini +1 olarak arttï¿½r
 				index++;
 
-				// Taranan % karakteri var mý kontrol et, varsa karakteri % olarak ayarla ve bu indexi geç
+				// Taranan % karakteri var mï¿½ kontrol et, varsa karakteri % olarak ayarla ve bu indexi geï¿½
 				if (metin[index] == '%')
 				{
 					metin[index] = '%';
@@ -93,7 +94,7 @@ std::string service::formattedString(AMX* amx, cell* params, cell text_index, in
 					amx_GetAddr(amx, params[args_count++], &deger);
 
 					metin.replace(yuzde, index - yuzde + 1, fmt::sprintf(metin.substr(yuzde, index - yuzde + 1), static_cast<int>(*deger)));
-				
+
 					continue;
 				}
 
@@ -163,7 +164,7 @@ std::string service::formattedString(AMX* amx, cell* params, cell text_index, in
 						amx_GetAddr(amx, params[args_count++], &deger);
 
 						metin.replace(yuzde, index - yuzde + 1, fmt::sprintf(metin.substr(yuzde, index - yuzde + 1), static_cast<int>(*deger)));
-					
+
 						degistir = true;
 					}
 					else if (metin[index] == 'f' || metin[index] == 'F' || metin[index] == 'a' || metin[index] == 'A' || metin[index] == 'g' || metin[index] == 'G')
@@ -172,7 +173,7 @@ std::string service::formattedString(AMX* amx, cell* params, cell text_index, in
 						amx_GetAddr(amx, params[args_count++], &deger);
 
 						metin.replace(yuzde, index - yuzde + 1, fmt::sprintf(metin.substr(yuzde, index - yuzde + 1), static_cast<float>(amx_ctof(*deger))));
-					
+
 						degistir = true;
 					}
 

@@ -26,7 +26,7 @@ bool load = false;
 extern void *pAMXFunctions;
 std::set<AMX*> gAmx;
 
-PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports() 
+PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports()
 {
 	return sampgdk::Supports() | SUPPORTS_AMX_NATIVES | SUPPORTS_PROCESS_TICK;
 }
@@ -60,7 +60,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL Load(void **ppData)
 		sampgdk::logprintf(" |  benburakya - Nexor#4730      |");
 		sampgdk::logprintf(" |                               |");
 		sampgdk::logprintf(" =================================");
-		sampgdk::logprintf("");	
+		sampgdk::logprintf("");
 	}
 	return load;
 }
@@ -125,7 +125,7 @@ extern "C" const AMX_NATIVE_INFO NativeList[] =
 	{"DynamicTextDrawSetPreviewRot",					Natives::DynamicTextDrawSetPreviewRot},
 	{"DynamicTextDrawSetPreviewVehCol",					Natives::DynamicTextDrawSetPreviewVehicleColours},
 	{"DynamicTextDrawSetClick",							Natives::DynamicTextDrawSetClickCallback},
-	
+
 	{"IsValidDynamicTextDraw",							Natives::IsValidDynamicTextDraw},
 	{"IsDynTextDrawVisibleForPlayer",					Natives::IsDynamicTextDrawVisibleForPlayer},
 	{"DynamicTextDrawGetString",						Natives::DynamicTextDrawGetString},
@@ -171,7 +171,7 @@ extern "C" const AMX_NATIVE_INFO NativeList[] =
 	{"DynamicPlayerTextDrawSetPrevRot",					Natives::DynamicPlayerTextDrawSetPreviewRot},
 	{"DynamicPlayerTextDrawPrevVehCol",					Natives::DynamicPlayerTextDrawSetPreviewVehicleColours},
 	{"DynamicPlayerTextDrawSetClick",					Natives::DynamicPlayerTextDrawSetClickCallback},
-	
+
 	{"IsValidDynamicPlayerTextDraw",					Natives::IsValidDynamicPlayerTextDraw},
 	{"IsDynamicPlayerTextDrawVisible",					Natives::IsDynamicPlayerTextDrawVisible},
 	{"DynamicPlayerTextDrawGetString",					Natives::DynamicPlayerTextDrawGetString},
@@ -194,20 +194,6 @@ extern "C" const AMX_NATIVE_INFO NativeList[] =
 	{"DynPlayerTextDrawGetPrevVehCol",					Natives::DynamicPlayerTextDrawGetPreviewVehicleColours},
 	{"PlayerTextDrawGetRealID",							Natives::PlayerTextDrawGetRealID},
 	{"PlayerTextDrawGetSize",							Natives::PlayerTextDrawGetSize},
-
-	// Data (Int)
-	{"DynamicTextDraw_SetIntData",						Natives::DynamicTextDraw_SetIntData},
-	{"DynamicTextDraw_GetIntData",						Natives::DynamicTextDraw_GetIntData},
-	{"DynamicTextDraw_ClearIntData",					Natives::DynamicTextDraw_ClearIntData},
-
-	// Data (Float)
-	{"DynamicTextDraw_SetFloatData",					Natives::DynamicTextDraw_SetFloatData},
-	{"DynamicTextDraw_GetFloatData",					Natives::DynamicTextDraw_GetFloatData},
-
-	// Data (Array)
-	{ "DynamicTextDraw_SetArrayData",					Natives::DynamicTextDraw_SetArrayData},
-	{ "DynamicTextDraw_GetArrayData",					Natives::DynamicTextDraw_GetArrayData},
-	{ "DynamicTextDraw_ClearArrayData",					Natives::DynamicTextDraw_ClearArrayData},
 
 	// Logger
 	{ "TDLogger__",										Natives::TDLogger },
@@ -302,7 +288,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickTextDraw(int playerid, int clickedid
 				amx_Push(*p, static_cast<cell>(playerid));
 				amx_Exec(*p, NULL, idx);
 			}
-			
+
 			if (!amx_FindPublic(*p, "OnClickDynamicTextDraw", &idx))
 			{
 				amx_Push(*p, static_cast<cell>(INVALID_TEXT_DRAW));
@@ -325,12 +311,36 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickTextDraw(int playerid, int clickedid
 		AMX* amx = it->second->amx;
 		int idx = it->second->clickCallback;
 
-		if (idx == 0 && amx_FindPublic(amx, "OnClickDynamicTextDraw", &idx) != AMX_ERR_NONE)
-			break;
+		if (idx == 0)
+		{
+			if (amx_FindPublic(amx, "OnClickDynamicTextDraw", &idx) != AMX_ERR_NONE)
+				break;
 
-		amx_Push(amx, static_cast<cell>(it->first));
+			amx_Push(amx, static_cast<cell>(it->first));
+			amx_Push(amx, static_cast<cell>(playerid));
+			amx_Exec(amx, NULL, idx);
+
+			break;
+		}
+
+		cell allocations[10];
+		size_t allocationsCount = 0;
+
+		auto argsIt = it->second->userData.rbegin();
+		auto argsItEnd = it->second->userData.rend();
+
+		for (; argsIt != argsItEnd; ++argsIt) {
+			cell xAddr = argsIt->push(amx);
+
+			if (xAddr != 0)
+				allocations[allocationsCount++] = xAddr;
+		}
+
 		amx_Push(amx, static_cast<cell>(playerid));
 		amx_Exec(amx, NULL, idx);
+
+		for (size_t i = 0; i < allocationsCount; ++i)
+			amx_Release(amx, allocations[i]);
 
 		break;
 	}
@@ -351,12 +361,36 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickPlayerTextDraw(int playerid, int pla
 		AMX* amx = it->second->amx;
 		int idx = it->second->clickCallback;
 
-		if (idx == 0 && amx_FindPublic(amx, "OnClickDynamicPlayerTextDraw", &idx) != AMX_ERR_NONE)
-			break;
+		if (idx == 0)
+		{
+			if (amx_FindPublic(amx, "OnClickDynamicPlayerTextDraw", &idx) != AMX_ERR_NONE)
+				break;
 
-		amx_Push(amx, static_cast<cell>(it->first));
+			amx_Push(amx, static_cast<cell>(it->first));
+			amx_Push(amx, static_cast<cell>(playerid));
+			amx_Exec(amx, NULL, idx);
+
+			break;
+		}
+
+		cell allocations[10];
+		size_t allocationsCount = 0;
+
+		auto argsIt = it->second->userData.rbegin();
+		auto argsItEnd = it->second->userData.rend();
+
+		for (; argsIt != argsItEnd; ++argsIt) {
+			cell xAddr = argsIt->push(amx);
+
+			if (xAddr != 0)
+				allocations[allocationsCount++] = xAddr;
+		}
+
 		amx_Push(amx, static_cast<cell>(playerid));
 		amx_Exec(amx, NULL, idx);
+
+		for (size_t i = 0; i < allocationsCount; ++i)
+			amx_Release(amx, allocations[i]);
 
 		break;
 	}
