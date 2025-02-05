@@ -121,4 +121,7 @@ namespace Natives
 
 	// Logger
 	cell AMX_NATIVE_CALL TDLogger(AMX* amx, cell* params);
+
+	// Misc
+	cell AMX_NATIVE_CALL CancelSelectDynTextDraw(AMX* amx, cell* params);
 };

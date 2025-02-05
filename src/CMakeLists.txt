@@ -2,10 +2,10 @@ set(CMAKE_SUPPRESS_REGENERATION true)
 
 project(textdraw-streamer)
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.10)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-# link_libraries(-static-libgcc -static-libstdc++)
+link_libraries(-static-libgcc -static-libstdc++)
 
 include(AMXConfig)
 include(AddSAMPPlugin)

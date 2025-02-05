@@ -76,28 +76,35 @@ ErrorID service::parseVariadicArgs(AMX* amx, cell const* args, size_t formatInde
             return ErrorID::SpecifierCountMismatchArgs;
 
         cell* source;
-        amx_GetAddr(amx, args[argIndex++], &source);
 
         switch (lexer.kind) {
         case 'i':
+            amx_GetAddr(amx, args[argIndex++], &source);
+
             pwnValue.type = PawnValueType::Int;
             pwnValue.data.i = *source;
             output.push_back(std::move(pwnValue));
             break;
 
         case 'f':
+            amx_GetAddr(amx, args[argIndex++], &source);
+
             pwnValue.type = PawnValueType::Float;
             pwnValue.data.i = *source;
             output.push_back(std::move(pwnValue));
             break;
 
         case 'u':
+            amx_GetAddr(amx, args[argIndex++], &source);
+
             pwnValue.type = PawnValueType::UInt;
             pwnValue.data.i = *source;
             output.push_back(std::move(pwnValue));
             break;
 
         case 's': {
+            amx_GetAddr(amx, args[argIndex++], &source);
+
             cell length;
             amx_StrLen(source, &length);
 
@@ -118,16 +125,23 @@ ErrorID service::parseVariadicArgs(AMX* amx, cell const* args, size_t formatInde
                 return ErrorID::InvalidSpecifierUse;
             }
             else if (lexer.attribute == "*") {
-                if (argIndex >= argsCount)
+                if (argIndex + 1 >= argsCount)
                     return ErrorID::SpecifierCountMismatchArgs;
 
-                length = argIndex++;
+                cell* lengthPtr;
+
+                amx_GetAddr(amx, args[argIndex++], &lengthPtr);
+                amx_GetAddr(amx, args[argIndex++], &source);
+
+                length = *lengthPtr;
             }
             else {
                 length = std::stoi(lexer.attribute);
 
                 if (length <= 0)
                     return ErrorID::InvalidSpecifierUse;
+
+                amx_GetAddr(amx, args[argIndex++], &source);
             }
 
             pwnValue.type = PawnValueType::Array;

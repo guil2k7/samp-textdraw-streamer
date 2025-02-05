@@ -22,11 +22,22 @@ bool Plugin_Settings::logMode = true;
 std::string Plugin_Settings::file = "unknown";
 int Plugin_Settings::line;
 
+bool gCancelTextDraw = false;
+
 cell AMX_NATIVE_CALL Natives::TDLogger(AMX* amx, cell* params)
 {
 	CHECK_PARAMS(2);
 	Plugin_Settings::file = service::getString(amx, params[1]);
 	Plugin_Settings::line = static_cast<int>(params[2]);
+	return 1;
+}
+
+cell AMX_NATIVE_CALL Natives::CancelSelectDynTextDraw(AMX* amx, cell* params)
+{
+	CancelSelectTextDraw(params[1]);
+
+	gCancelTextDraw = true;
+
 	return 1;
 }
 

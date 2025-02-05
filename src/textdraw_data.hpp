@@ -142,3 +142,5 @@ public:
 	static void Destroy();
 	static void Reload(std::unordered_map<int, Text_Data*>::iterator it);
 };
+
+extern bool gCancelTextDraw;

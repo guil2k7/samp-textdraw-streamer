@@ -40,7 +40,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL Load(void **ppData)
 		sampgdk::logprintf("");
 		sampgdk::logprintf(" =================================");
 		sampgdk::logprintf(" |                               |");
-		sampgdk::logprintf(" |    textdraw-streamer v%d.%d.%d   |", MINOR, MAJOR, PATCH);
+		sampgdk::logprintf(" |    textdraw-streamer v%d.%d.%d   |", MAJOR, MINOR, PATCH);
 		sampgdk::logprintf(" |            Loaded             |");
 		sampgdk::logprintf(" |                               |");
 		sampgdk::logprintf(" |  Coding:                      |");
@@ -75,7 +75,7 @@ PLUGIN_EXPORT void PLUGIN_CALL Unload()
 		sampgdk::logprintf("");
 		sampgdk::logprintf(" =================================");
 		sampgdk::logprintf(" |                               |");
-		sampgdk::logprintf(" |    textdraw-streamer v%d.%d.%d   |", MINOR, MAJOR, PATCH);
+		sampgdk::logprintf(" |    textdraw-streamer v%d.%d.%d   |", MAJOR, MINOR, PATCH);
 		sampgdk::logprintf(" |           Unloaded            |");
 		sampgdk::logprintf(" |                               |");
 		sampgdk::logprintf(" |  Coding:                      |");
@@ -198,6 +198,9 @@ extern "C" const AMX_NATIVE_INFO NativeList[] =
 	// Logger
 	{ "TDLogger__",										Natives::TDLogger },
 
+	// Misc
+	{ "CancelSelectDynTextDraw",						Natives::CancelSelectDynTextDraw },
+
 	// NULL
 	{NULL, NULL}
 };
@@ -280,6 +283,11 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickTextDraw(int playerid, int clickedid
 	// ESC bast�ysa
 	if (clickedid == INVALID_TEXT_DRAW)
 	{
+		if (gCancelTextDraw) {
+			gCancelTextDraw = false;
+			return false;
+		}
+
 		int idx;
 		for (std::set<AMX*>::iterator p = gAmx.begin(); p != gAmx.end(); p++)
 		{
