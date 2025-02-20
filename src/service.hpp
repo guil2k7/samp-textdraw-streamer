@@ -15,8 +15,9 @@
  */
 
 #include <string>
-#include <sstream>
+#include <vector>
 #include "sampgdk.hpp"
+#include "textdraw_data.hpp"
 
 namespace service
 {
@@ -25,4 +26,5 @@ namespace service
 	void setString(AMX* amx, cell output, cell size, std::string string);
 	std::string getString(AMX* amx, cell input);
 	std::string formattedString(AMX* amx, cell* params, cell text_index, int32_t args_offset);
+	ErrorID parseVariadicArgs(AMX* amx, cell const* args, size_t formatIndex, size_t vargsIndex, std::vector<PawnValue>& output);
 };

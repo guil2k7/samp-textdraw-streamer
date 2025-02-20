@@ -1837,6 +1837,12 @@ SAMPGDK_NATIVE(bool, TextDrawSetString(int text, const char * string));
 
 /**
  * \ingroup natives
+ * \see <a href="https://open.mp/docs/scripting/functions/TextDrawSetStringForPlayer">TextDrawSetStringForPlayer on open.mp Wiki</a>
+ */
+ SAMPGDK_NATIVE(bool, TextDrawSetStringForPlayer(int text, int playerid, const char * string));
+
+/**
+ * \ingroup natives
  * \see <a href="http://wiki.sa-mp.com/wiki/TextDrawSetPreviewModel">TextDrawSetPreviewModel on SA-MP Wiki</a>
  */
 SAMPGDK_NATIVE(bool, TextDrawSetPreviewModel(int text, int modelindex));
@@ -2958,6 +2964,9 @@ inline bool RedirectDownload(int playerid, const char * url) {
 
 #undef  TextDrawSetString
 #define TextDrawSetString sampgdk_TextDrawSetString
+
+#undef  TextDrawSetStringForPlayer
+#define TextDrawSetStringForPlayer sampgdk_TextDrawSetStringForPlayer
 
 #undef  TextDrawSetPreviewModel
 #define TextDrawSetPreviewModel sampgdk_TextDrawSetPreviewModel

@@ -2,8 +2,10 @@ set(CMAKE_SUPPRESS_REGENERATION true)
 
 project(textdraw-streamer)
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.10)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+link_libraries(-static-libgcc -static-libstdc++)
 
 include(AMXConfig)
 include(AddSAMPPlugin)
@@ -22,7 +24,6 @@ add_samp_plugin(textdraw-streamer
 	compilation_date.hpp
 	main.cpp
 	natives.hpp
-	natives_data.cpp
 	natives_global.cpp
 	natives_player.cpp
 	natives_plugin.cpp
@@ -37,5 +38,7 @@ add_samp_plugin(textdraw-streamer
 	slot_manager.hpp
 	textdraw_data.cpp
 	textdraw_data.hpp
+	Value.cpp
+	VariadicArgs.cpp
 	textdraw-streamer.def
 )

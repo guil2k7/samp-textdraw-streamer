@@ -4510,6 +4510,23 @@ SAMPGDK_NATIVE(bool, TextDrawSetString(int text, const char * string)) {
   return !!(retval);
 }
 
+SAMPGDK_NATIVE(bool, TextDrawSetStringForPlayer(int text, int playerid, const char * string)) {
+  static AMX_NATIVE native;
+  cell retval;
+  cell params[4];
+  cell string_;
+  sampgdk_log_debug("TextDrawSetStringForPlayer(%d, %d, \"%s\")", text, playerid, string);
+  native = sampgdk_native_find_flexible("TextDrawSetStringForPlayer", native);
+  sampgdk_fakeamx_push_string(string, NULL, &string_);
+  params[0] = 3 * sizeof(cell);
+  params[1] = (cell)text;
+  params[2] = (cell)playerid;
+  params[3] = string_;
+  retval = native(sampgdk_fakeamx_amx(), params);
+  sampgdk_fakeamx_pop(string_);
+  return !!(retval);
+}
+
 SAMPGDK_NATIVE(bool, TextDrawSetPreviewModel(int text, int modelindex)) {
   static AMX_NATIVE native;
   cell retval;

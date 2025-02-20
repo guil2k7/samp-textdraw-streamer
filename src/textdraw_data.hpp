@@ -16,11 +16,13 @@
 
 #pragma once
 
-#include <iostream>
 #include <map>
-#include <vector>
+#include <string>
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
+#include "amx.h"
+#include "Value.hpp"
 
 #define	INVALID_DYNAMIC_PLAYER_TEXTDRAW	(-1)
 
@@ -30,18 +32,27 @@ enum TDStreamer_Type
 	PLAYER
 };
 
-enum LogType
+enum class ErrorID
 {
+	None,
+
 	// Player
-	CREATE_PLAYER_TEXTDRAW,
-	FIND_PLAYER_TEXT,
-	SHOW_LIMIT_PLAYER,
+	CreatePlayerTextdraw,
+	FindPlayerText,
+	ShowLimitPlayer,
 
 	// Global
-	FIND_GLOBAL_TEXT,
+	FindGlobalText,
 
 	// Data
-	INVALID_TYPE,
+	InvalidType,
+
+	SpecifierCountMismatchArgs,
+	InvalidSpecifierUse,
+	UnknownSpecifier,
+
+	// Misc
+	FunctionNotFound,
 };
 
 struct DefaultText
@@ -71,6 +82,7 @@ struct DefaultText
 
 struct Text_Data
 {
+	AMX*				amx{};
 	int					real_id{};
 	float				create_x{};
 	float				create_y{};
@@ -98,7 +110,8 @@ struct Text_Data
 	int					veh_col2{};
 	std::map<int, int>* extra_id{};
 	float				float_data{};
-	std::vector<int>*	array_data{};
+	int					clickCallback{};
+	std::vector<PawnValue> userData;
 };
 
 class Plugin_Settings
@@ -107,7 +120,7 @@ public:
 	static bool logMode;
 	static std::string file;
 	static int line;
-	static void ILogger(LogType type, std::string funcs, int playerid, int textid);
+	static void ILogger(ErrorID type, std::string funcs, int playerid, int textid);
 };
 
 class PlayerText
@@ -129,3 +142,5 @@ public:
 	static void Destroy();
 	static void Reload(std::unordered_map<int, Text_Data*>::iterator it);
 };
+
+extern bool gCancelTextDraw;

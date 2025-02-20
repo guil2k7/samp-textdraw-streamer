@@ -22,6 +22,8 @@ bool Plugin_Settings::logMode = true;
 std::string Plugin_Settings::file = "unknown";
 int Plugin_Settings::line;
 
+bool gCancelTextDraw = false;
+
 cell AMX_NATIVE_CALL Natives::TDLogger(AMX* amx, cell* params)
 {
 	CHECK_PARAMS(2);
@@ -30,11 +32,20 @@ cell AMX_NATIVE_CALL Natives::TDLogger(AMX* amx, cell* params)
 	return 1;
 }
 
-void Plugin_Settings::ILogger(LogType type, std::string funcs, int playerid, int textid)
+cell AMX_NATIVE_CALL Natives::CancelSelectDynTextDraw(AMX* amx, cell* params)
+{
+	CancelSelectTextDraw(params[1]);
+
+	gCancelTextDraw = true;
+
+	return 1;
+}
+
+void Plugin_Settings::ILogger(ErrorID type, std::string funcs, int playerid, int textid)
 {
 	if (Plugin_Settings::logMode == true)
 	{
-		if (type == LogType::CREATE_PLAYER_TEXTDRAW)
+		if (type == ErrorID::CreatePlayerTextdraw)
 		{
 			sampgdk::logprintf("[textdraw.streamer] %s: First use the CreatePlayerTextDraw function. (playerid: %d, textId: %d) (%s:%d)"
 			,
@@ -45,7 +56,7 @@ void Plugin_Settings::ILogger(LogType type, std::string funcs, int playerid, int
 				Plugin_Settings::line
 			);
 		}
-		else if (type == LogType::FIND_PLAYER_TEXT)
+		else if (type == ErrorID::FindPlayerText)
 		{
 			sampgdk::logprintf("[textdraw.streamer] %s: No such id was found. (playerid: %d, textId: %d) (%s:%d)"
 			,
@@ -56,7 +67,7 @@ void Plugin_Settings::ILogger(LogType type, std::string funcs, int playerid, int
 				Plugin_Settings::line
 			);
 		}
-		else if (type == LogType::SHOW_LIMIT_PLAYER)
+		else if (type == ErrorID::ShowLimitPlayer)
 		{
 			sampgdk::logprintf("[textdraw.streamer] %s: A maximum of %d textdraws can be displayed on a player. (playerid: %d, textId: %d) (%s:%d)"
 			,
@@ -68,7 +79,7 @@ void Plugin_Settings::ILogger(LogType type, std::string funcs, int playerid, int
 				Plugin_Settings::line
 			);
 		}
-		else if (type == LogType::FIND_GLOBAL_TEXT)
+		else if (type == ErrorID::FindGlobalText)
 		{
 			sampgdk::logprintf("[textdraw.streamer] %s: No such id was found. (textId: %d) (%s:%d)"
 			,
@@ -78,9 +89,45 @@ void Plugin_Settings::ILogger(LogType type, std::string funcs, int playerid, int
 				Plugin_Settings::line
 			);
 		}
-		else if (type == LogType::INVALID_TYPE)
+		else if (type == ErrorID::InvalidType)
 		{
 			sampgdk::logprintf("[textdraw.streamer] %s: Type format is invalid. (%s:%d)"
+			,
+				funcs.c_str(),
+				Plugin_Settings::file.c_str(),
+				Plugin_Settings::line
+			);
+		}
+		else if (type == ErrorID::FunctionNotFound)
+		{
+			sampgdk::logprintf("[textdraw.streamer] %s: function not found. (%s:%d)"
+			,
+				funcs.c_str(),
+				Plugin_Settings::file.c_str(),
+				Plugin_Settings::line
+			);
+		}
+		else if (type == ErrorID::UnknownSpecifier)
+		{
+			sampgdk::logprintf("[textdraw.streamer] %s: unknown specifier. (%s:%d)"
+			,
+				funcs.c_str(),
+				Plugin_Settings::file.c_str(),
+				Plugin_Settings::line
+			);
+		}
+		else if (type == ErrorID::InvalidSpecifierUse)
+		{
+			sampgdk::logprintf("[textdraw.streamer] %s: invalid specifier use. (%s:%d)"
+			,
+				funcs.c_str(),
+				Plugin_Settings::file.c_str(),
+				Plugin_Settings::line
+			);
+		}
+		else if (type == ErrorID::SpecifierCountMismatchArgs)
+		{
+			sampgdk::logprintf("[textdraw.streamer] %s: specifiers count does not match the arguments. (%s:%d)"
 			,
 				funcs.c_str(),
 				Plugin_Settings::file.c_str(),

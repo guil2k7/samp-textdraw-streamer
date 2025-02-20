@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-#define		MINOR		(2)
-#define		MAJOR		(0)
-#define		PATCH		(3)
+#define		MAJOR		(2)
+#define		MINOR		(1)
+#define		PATCH		(0)

@@ -50,6 +50,7 @@ cell AMX_NATIVE_CALL Natives::CreateDynamicPlayerTextDraw(AMX* amx, cell* params
 
 		// PlayerData verilerini olustur
 		Text_Data* data = new Text_Data();
+		data->amx = amx;
 		data->real_id = -1;
 		data->create_x = amx_ctof(params[2]);
 		data->create_y = amx_ctof(params[3]);
@@ -77,7 +78,7 @@ cell AMX_NATIVE_CALL Natives::CreateDynamicPlayerTextDraw(AMX* amx, cell* params
 		data->veh_col2 = -2;
 		data->extra_id = map;
 		data->float_data = 0.0;
-		data->array_data = arr;
+		data->clickCallback = 0;
 
 		// Veriyi pointera aktar
 		PlayerText::pText[playerid]->emplace(auto_increment, data);
@@ -108,14 +109,14 @@ cell AMX_NATIVE_CALL Natives::DestroyDynamicPlayerTextDraw(AMX* amx, cell* param
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -124,8 +125,8 @@ cell AMX_NATIVE_CALL Natives::DestroyDynamicPlayerTextDraw(AMX* amx, cell* param
 	}
 
 	slot_manager_player::remove_id(playerid, textid);
+
 	delete it->second->extra_id;
-	delete it->second->array_data;
 	delete it->second;
 	PlayerText::pText[playerid]->erase(it);
 	return 1;
@@ -154,14 +155,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawLetterSize(AMX* amx, cell* pa
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -198,14 +199,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawTextSize(AMX* amx, cell* para
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -239,14 +240,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawAlignment(AMX* amx, cell* par
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -279,14 +280,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawColour(AMX* amx, cell* params
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -319,14 +320,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawUseBox(AMX* amx, cell* params
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -359,14 +360,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawBoxColor(AMX* amx, cell* para
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -399,14 +400,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawSetShadow(AMX* amx, cell* par
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -439,14 +440,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawSetOutline(AMX* amx, cell* pa
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -479,14 +480,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawBackgroundColour(AMX* amx, ce
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -519,14 +520,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawFont(AMX* amx, cell* params)
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -559,14 +560,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawSetProportional(AMX* amx, cel
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -599,14 +600,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawSetSelectable(AMX* amx, cell*
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -638,14 +639,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawShow(AMX* amx, cell* params)
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -654,7 +655,7 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawShow(AMX* amx, cell* params)
 		int text_id = CreatePlayerTextDraw(playerid, it->second->create_x, it->second->create_y, it->second->text.c_str());
 		if (text_id == INVALID_TEXT_DRAW)
 		{
-			Plugin_Settings::ILogger(LogType::SHOW_LIMIT_PLAYER, __func__, playerid, textid);
+			Plugin_Settings::ILogger(ErrorID::ShowLimitPlayer, __func__, playerid, textid);
 			return 0;
 		}
 		else
@@ -753,14 +754,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawHide(AMX* amx, cell* params)
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -787,14 +788,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawSetString(AMX* amx, cell* par
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -827,14 +828,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawSetPreviewModel(AMX* amx, cel
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -873,14 +874,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawSetPreviewRot(AMX* amx, cell*
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -917,14 +918,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawSetPreviewVehicleColours(AMX*
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -933,6 +934,58 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawSetPreviewVehicleColours(AMX*
 
 	if (it->second->real_id != INVALID_DYNAMIC_PLAYER_TEXTDRAW) {
 		PlayerTextDrawSetPreviewVehCol(playerid, it->second->real_id, it->second->veh_col1, it->second->veh_col2);
+	}
+
+	return 1;
+}
+
+//
+// native DynamicPlayerTextDrawSetClick(playerid, PlayerText:textid, const callback[], const specifiers[], {Float,_}:...);
+//
+cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawSetClickCallback(AMX* amx, cell* params)
+{
+	if (4 * sizeof (cell) > params[0]) {
+		sampgdk::logprintf("%s: Expecting >= 4 parameter(s), but found %d.", __func__, params[0] / sizeof(cell));
+		return 0; 
+	}
+
+	int playerid = static_cast<int>(params[1]);
+	int textid = static_cast<int>(params[2]);
+
+	if (GlobalText::PlayerList.find(playerid) == GlobalText::PlayerList.end()) {
+		return 0;
+	}
+
+	if (PlayerText::pText[playerid] == nullptr)
+	{
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
+		return 0;
+	}
+
+	auto it = PlayerText::pText[playerid]->find(textid);
+	if (it == PlayerText::pText[playerid]->end())
+	{
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
+		return 0;
+	}
+
+	std::string callback = service::getString(amx, params[3]);
+
+	if (amx_FindPublic(amx, callback.c_str(), &it->second->clickCallback) != AMX_ERR_NONE)
+	{
+		Plugin_Settings::ILogger(ErrorID::FunctionNotFound, __func__, playerid, textid);
+		return 0;
+	}
+
+	ErrorID error = service::parseVariadicArgs(amx, params, 4, 5, it->second->userData);
+
+	if (error != ErrorID::None) {
+		it->second->clickCallback = 0;
+		it->second->userData.clear();
+
+		Plugin_Settings::ILogger(error, __func__, playerid, textid);
+
+		return 0;
 	}
 
 	return 1;
@@ -984,14 +1037,14 @@ cell AMX_NATIVE_CALL Natives::IsDynamicPlayerTextDrawVisible(AMX* amx, cell* par
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1015,14 +1068,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawGetString(AMX* amx, cell* par
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1054,14 +1107,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawSetPos(AMX* amx, cell* params
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1096,14 +1149,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawGetLetterSize(AMX* amx, cell*
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1132,14 +1185,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawGetTextSize(AMX* amx, cell* p
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1168,14 +1221,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawGetPos(AMX* amx, cell* params
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1204,14 +1257,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawGetColour(AMX* amx, cell* par
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1237,14 +1290,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawGetBoxColour(AMX* amx, cell* 
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1270,14 +1323,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawGetBackgroundColour(AMX* amx,
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1303,14 +1356,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawGetShadow(AMX* amx, cell* par
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1336,14 +1389,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawGetOutline(AMX* amx, cell* pa
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1369,14 +1422,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawGetFont(AMX* amx, cell* param
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1402,14 +1455,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawIsBox(AMX* amx, cell* params)
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1435,14 +1488,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawIsProportional(AMX* amx, cell
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1468,14 +1521,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawIsSelectable(AMX* amx, cell* 
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1501,14 +1554,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawGetAlignment(AMX* amx, cell* 
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1534,14 +1587,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawGetPreviewModel(AMX* amx, cel
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1567,14 +1620,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawGetPreviewRot(AMX* amx, cell*
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1605,14 +1658,14 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawGetPreviewVehicleColours(AMX*
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1643,14 +1696,14 @@ cell AMX_NATIVE_CALL Natives::PlayerTextDrawGetRealID(AMX* amx, cell* params)
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, textid);
 		return 0;
 	}
 
 	auto it = PlayerText::pText[playerid]->find(textid);
 	if (it == PlayerText::pText[playerid]->end())
 	{
-		Plugin_Settings::ILogger(LogType::FIND_PLAYER_TEXT, __func__, playerid, textid);
+		Plugin_Settings::ILogger(ErrorID::FindPlayerText, __func__, playerid, textid);
 		return 0;
 	}
 
@@ -1671,7 +1724,7 @@ cell AMX_NATIVE_CALL Natives::PlayerTextDrawGetSize(AMX* amx, cell* params)
 
 	if (PlayerText::pText[playerid] == nullptr)
 	{
-		Plugin_Settings::ILogger(LogType::CREATE_PLAYER_TEXTDRAW, __func__, playerid, 0);
+		Plugin_Settings::ILogger(ErrorID::CreatePlayerTextdraw, __func__, playerid, 0);
 		return 0;
 	}
 

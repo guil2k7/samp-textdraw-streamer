@@ -47,6 +47,7 @@ namespace Natives
 	cell AMX_NATIVE_CALL DynamicTextDrawShowForAll(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicTextDrawHideForAll(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicTextDrawSetString(AMX* amx, cell* params);
+	cell AMX_NATIVE_CALL DynamicTextDrawSetStringForPlayer(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicTextDrawSetPreviewModel(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicTextDrawSetPreviewRot(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicTextDrawSetPreviewVehicleColours(AMX* amx, cell* params);
@@ -70,6 +71,7 @@ namespace Natives
 	cell AMX_NATIVE_CALL DynamicTextDrawGetPreviewModel(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicTextDrawGetPreviewRot(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicTextDrawGetPreviewVehicleColours(AMX* amx, cell* params);
+	cell AMX_NATIVE_CALL DynamicTextDrawSetClickCallback(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicTextDrawGetRealID(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicTextDrawGetSize(AMX* amx, cell* params);
 
@@ -114,23 +116,13 @@ namespace Natives
 	cell AMX_NATIVE_CALL DynamicPlayerTextDrawGetPreviewModel(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicPlayerTextDrawGetPreviewRot(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL DynamicPlayerTextDrawGetPreviewVehicleColours(AMX* amx, cell* params);
+	cell AMX_NATIVE_CALL DynamicPlayerTextDrawSetClickCallback(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL PlayerTextDrawGetRealID(AMX* amx, cell* params);
 	cell AMX_NATIVE_CALL PlayerTextDrawGetSize(AMX* amx, cell* params);
 
-	// Data (Int)
-	cell AMX_NATIVE_CALL DynamicTextDraw_SetIntData(AMX* amx, cell* params);
-	cell AMX_NATIVE_CALL DynamicTextDraw_GetIntData(AMX* amx, cell* params);
-	cell AMX_NATIVE_CALL DynamicTextDraw_ClearIntData(AMX* amx, cell* params);
-
-	// Data (Float)
-	cell AMX_NATIVE_CALL DynamicTextDraw_SetFloatData(AMX* amx, cell* params);
-	cell AMX_NATIVE_CALL DynamicTextDraw_GetFloatData(AMX* amx, cell* params);
-
-	// Data (Array)
-	cell AMX_NATIVE_CALL DynamicTextDraw_SetArrayData(AMX* amx, cell* params);
-	cell AMX_NATIVE_CALL DynamicTextDraw_GetArrayData(AMX* amx, cell* params);
-	cell AMX_NATIVE_CALL DynamicTextDraw_ClearArrayData(AMX* amx, cell* params);
-
 	// Logger
 	cell AMX_NATIVE_CALL TDLogger(AMX* amx, cell* params);
+
+	// Misc
+	cell AMX_NATIVE_CALL CancelSelectDynTextDraw(AMX* amx, cell* params);
 };
