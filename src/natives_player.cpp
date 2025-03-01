@@ -977,6 +977,9 @@ cell AMX_NATIVE_CALL Natives::DynamicPlayerTextDrawSetClickCallback(AMX* amx, ce
 		return 0;
 	}
 
+	if (it->second->userData.size() != 0)
+		it->second->userData.clear();
+
 	ErrorID error = service::parseVariadicArgs(amx, params, 4, 5, it->second->userData);
 
 	if (error != ErrorID::None) {

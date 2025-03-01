@@ -425,6 +425,14 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #define IsTextDrawVisibleForPlayer(%0,%1) IsDynTextDrawVisibleForPlayer_(%0,%1, __file, __line)
 
 /*******************************************************************************/
+#if defined _ALS_PlayerTextDrawGetString
+	#undef PlayerTextDrawGetString
+#else
+	#define _ALS_PlayerTextDrawGetString
+#endif
+#define PlayerTextDrawGetString DynamicPlayerTextDrawGetString
+
+/*******************************************************************************/
 #if defined _ALS_TextDrawSetPos
 	#undef TextDrawSetPos
 #else

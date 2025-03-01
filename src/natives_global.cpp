@@ -1319,6 +1319,9 @@ cell AMX_NATIVE_CALL Natives::DynamicTextDrawSetClickCallback(AMX* amx, cell* pa
 		return 0;
 	}
 
+	if (it->second->userData.size() != 0)
+		it->second->userData.clear();
+
 	ErrorID error = service::parseVariadicArgs(amx, params, 3, 4, it->second->userData);
 
 	if (error != ErrorID::None) {
