@@ -267,7 +267,6 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #endif
 
 #define TextDrawColor(%0,%1) DynamicTextDrawColour(%0, %1, __file, __line)
-#define TextDrawColour(%0,%1) DynamicTextDrawColour(%0, %1, __file, __line)
 
 /*******************************************************************************/
 #if defined _ALS_TextDrawUseBox
@@ -285,7 +284,6 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #endif
 
 #define TextDrawBoxColor(%0,%1) DynamicTextDrawBoxColour(%0, %1, __file, __line)
-#define TextDrawBoxColour(%0,%1) DynamicTextDrawBoxColour(%0, %1, __file, __line)
 
 /*******************************************************************************/
 #if defined _ALS_TextDrawSetShadow
@@ -311,7 +309,6 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #endif
 
 #define TextDrawBackgroundColor(%0,%1) DynamicTextDrawBackgroundColour(%0, %1, __file, __line)
-#define TextDrawBackgroundColour(%0,%1) DynamicTextDrawBackgroundColour(%0, %1, __file, __line)
 
 /*******************************************************************************/
 #if defined _ALS_TextDrawFont
@@ -409,13 +406,6 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #endif
 #define TextDrawSetPreviewVehCol(%0,%1,%2) DynamicTextDrawSetPreviewVehCol(%0, %1, %2, __file, __line)
 
-#if defined _INC_open_mp
-	#if __namemax > 31
-		#define TextDrawSetPreviewVehicleColors(%0,%1,%2) DynamicTextDrawSetPreviewVehCol(%0, %1, %2, __file, __line)
-		#define TextDrawSetPreviewVehicleColours(%0,%1,%2) DynamicTextDrawSetPreviewVehCol(%0, %1, %2, __file, __line)
-	#endif
-#endif
-
 /*******************************************************************************/
 #if defined _ALS_IsTextDrawVisibleForPlayer
 	#undef IsTextDrawVisibleForPlayer
@@ -423,14 +413,6 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 	#define _ALS_IsTextDrawVisibleForPlayer
 #endif
 #define IsTextDrawVisibleForPlayer(%0,%1) IsDynTextDrawVisibleForPlayer_(%0,%1, __file, __line)
-
-/*******************************************************************************/
-#if defined _ALS_PlayerTextDrawGetString
-	#undef PlayerTextDrawGetString
-#else
-	#define _ALS_PlayerTextDrawGetString
-#endif
-#define PlayerTextDrawGetString DynamicPlayerTextDrawGetString
 
 /*******************************************************************************/
 #if defined _ALS_TextDrawSetPos
@@ -472,7 +454,6 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #endif
 
 #define TextDrawGetColor(%0) DynamicTextDrawGetColour_(%0, __file, __line)
-#define TextDrawGetColour(%0) DynamicTextDrawGetColour_(%0, __file, __line)
 
 /*******************************************************************************/
 #if defined _ALS_TextDrawGetBoxColor
@@ -482,7 +463,6 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #endif
 
 #define TextDrawGetBoxColor(%0) DynamicTextDrawGetBoxColour_(%0, __file, __line)
-#define TextDrawGetBoxColour(%0) DynamicTextDrawGetBoxColour_(%0, __file, __line)
 
 /*******************************************************************************/
 #if defined _ALS_TextDrawGetBackgroundColor
@@ -492,7 +472,6 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #endif
 
 #define TextDrawGetBackgroundColor(%0) DynamicTextDrawGetBackgroundCo(%0, __file, __line)
-#define TextDrawGetBackgroundColour(%0) DynamicTextDrawGetBackgroundCo(%0, __file, __line)
 
 /*******************************************************************************/
 #if defined _ALS_TextDrawGetShadow
@@ -574,13 +553,6 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #endif
 #define TextDrawGetPreviewVehCol(%0,%1,%2) DynamicTextDrawGetPreviewVehCo(%0,%1,%2, __file, __line)
 
-#if defined _INC_open_mp
-	#if __namemax > 31
-		#define TextDrawGetPreviewVehicleColors(%0,%1,%2) DynamicTextDrawGetPreviewVehCo(%0,%1,%2, __file, __line)
-		#define TextDrawGetPreviewVehicleColours(%0,%1,%2) DynamicTextDrawGetPreviewVehCo(%0,%1,%2, __file, __line)
-	#endif
-#endif
-
 /*******************************************************************************/
 #if defined _ALS_TextDrawSetClick
 	#undef TextDrawSetClick
@@ -653,7 +625,6 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #endif
 
 #define PlayerTextDrawColor(%0,%1,%2) DynamicPlayerTextDrawColour(%0, %1, %2, __file, __line)
-#define PlayerTextDrawColour(%0,%1,%2) DynamicPlayerTextDrawColour(%0, %1, %2, __file, __line)
 
 /*******************************************************************************/
 #if defined _ALS_PlayerTextDrawUseBox
@@ -671,7 +642,6 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #endif
 
 #define PlayerTextDrawBoxColor(%0,%1,%2) DynamicPlayerTextDrawBoxColor(%0, %1, %2, __file, __line)
-#define PlayerTextDrawBoxColour(%0,%1,%2) DynamicPlayerTextDrawBoxColor(%0, %1, %2, __file, __line)
 
 /*******************************************************************************/
 #if defined _ALS_PlayerTextDrawSetShadow
@@ -697,7 +667,6 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #endif
 
 #define PlayerTextDrawBackgroundColor(%0,%1,%2) DynamicPlayerTextDrawBGColour(%0, %1, %2, __file, __line)
-#define PlayerTextDrawBackgroundColour(%0,%1,%2) DynamicPlayerTextDrawBGColour(%0, %1, %2, __file, __line)
 
 /*******************************************************************************/
 #if defined _ALS_PlayerTextDrawFont
@@ -772,13 +741,6 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #endif
 #define PlayerTextDrawSetPreviewVehCol(%0,%1,%2,%3) DynamicPlayerTextDrawPrevVehCol(%0, %1, %2, %3, __file, __line)
 
-#if defined _INC_open_mp
-	#if __namemax > 31
-		#define PlayerTextDrawSetPreviewVehicleColors(%0,%1,%2,%3) DynamicPlayerTextDrawPrevVehCol(%0, %1, %2, %3, __file, __line)
-		#define PlayerTextDrawSetPreviewVehicleColours(%0,%1,%2,%3) DynamicPlayerTextDrawPrevVehCol(%0, %1, %2, %3, __file, __line)
-	#endif
-#endif
-
 /*******************************************************************************/
 #if defined _ALS_IsPlayerTextDrawVisible
 	#undef IsPlayerTextDrawVisible
@@ -827,7 +789,6 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #endif
 
 #define PlayerTextDrawGetColor(%0,%1) DynamicPlayerTextDrawGetColour_(%0,%1, __file, __line)
-#define PlayerTextDrawGetColour(%0,%1) DynamicPlayerTextDrawGetColour_(%0,%1, __file, __line)
 
 /*******************************************************************************/
 #if defined _ALS_PlayerTextDrawGetBoxColor
@@ -837,23 +798,15 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #endif
 
 #define PlayerTextDrawGetBoxColor(%0,%1) DynamicPlayerTextDrawGetBoxCol_(%0,%1, __file, __line)
-#define PlayerTextDrawGetBoxColour(%0,%1) DynamicPlayerTextDrawGetBoxCol_(%0,%1, __file, __line)
 
 /*******************************************************************************/
-#if defined _ALS_PlayerTextDrawGetBgCol
+#if defined _ALS_PlayerTextDrawGetBackgroun
 	#undef PlayerTextDrawGetBackgroundCol
 #else
-	#define _ALS_PlayerTextDrawGetBgCol
+	#define _ALS_PlayerTextDrawGetBackgroun
 #endif
 
 #define PlayerTextDrawGetBackgroundCol(%0,%1) DynPlayerTextDrawGetBGColour_(%0,%1, __file, __line)
-
-#if defined _INC_open_mp
-	#if __namemax > 31
-		#define PlayerTextDrawGetBackgroundColor(%0,%1) DynPlayerTextDrawGetBGColour_(%0,%1, __file, __line)
-		#define PlayerTextDrawGetBackgroundColour(%0,%1) DynPlayerTextDrawGetBGColour_(%0,%1, __file, __line)
-	#endif
-#endif
 
 /*******************************************************************************/
 #if defined _ALS_PlayerTextDrawGetShadow
@@ -888,10 +841,10 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #define PlayerTextDrawIsBox(%0,%1) DynamicPlayerTextDrawIsBox_(%0,%1, __file, __line)
 
 /*******************************************************************************/
-#if defined _ALS_PlayerTextDrawIsProp
+#if defined _ALS_PlayerTextDrawIsProportion
 	#undef PlayerTextDrawIsProportional
 #else
-	#define _ALS_PlayerTextDrawIsProp
+	#define _ALS_PlayerTextDrawIsProportion
 #endif
 #define PlayerTextDrawIsProportional(%0,%1) DynPlayerTextDrawIsProportiona_(%0,%1, __file, __line)
 
@@ -912,35 +865,28 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 #define PlayerTextDrawGetAlignment(%0,%1) DynPlayerTextDrawGetAlignment_(%0,%1, __file, __line)
 
 /*******************************************************************************/
-#if defined _ALS_PlayerTextDrawGetPvwModel
+#if defined _ALS_PlayerTextDrawGetPreviewMo
 	#undef PlayerTextDrawGetPreviewModel
 #else
-	#define _ALS_PlayerTextDrawGetPvwModel
+	#define _ALS_PlayerTextDrawGetPreviewMo
 #endif
 #define PlayerTextDrawGetPreviewModel(%0,%1) DynPlayerTextDrawGetPreviewMdl_(%0,%1, __file, __line)
 
 /*******************************************************************************/
-#if defined _ALS_PlayerTextDrawGetPvwRot
+#if defined _ALS_PlayerTextDrawGetPreviewRo
 	#undef PlayerTextDrawGetPreviewRot
 #else
-	#define _ALS_PlayerTextDrawGetPvwRot
+	#define _ALS_PlayerTextDrawGetPreviewRo
 #endif
 #define PlayerTextDrawGetPreviewRot(%0,%1,%2,%3,%4,%5) DynPlayerTextDrawGetPreviewRot_(%0,%1,%2,%3,%4,%, __file, __line)
 
 /*******************************************************************************/
-#if defined _ALS_PlayerTextDrawGetPvwVehCol
+#if defined _ALS_PlayerTextDrawGetPreviewVe
 	#undef PlayerTextDrawGetPreviewVehCol
 #else
-	#define _ALS_PlayerTextDrawGetPvwVehCol
+	#define _ALS_PlayerTextDrawGetPreviewVe
 #endif
 #define PlayerTextDrawGetPreviewVehCol(%0,%1,%2,%3) DynPlayerTextDrawGetPrevVehCol_(%0,%1,%2,%3, __file, __line)
-
-#if defined _INC_open_mp
-	#if __namemax > 31
-		#define PlayerTextDrawGetPreviewVehicleColors(%0,%1,%2,%3) DynPlayerTextDrawGetPrevVehCol_(%0,%1,%2,%3, __file, __line)
-		#define PlayerTextDrawGetPreviewVehicleColours(%0,%1,%2,%3) DynPlayerTextDrawGetPrevVehCol_(%0,%1,%2,%3, __file, __line)
-	#endif
-#endif
 
 /*******************************************************************************/
 #if defined _ALS_PlayerTextDrawSetClick
@@ -964,3 +910,158 @@ forward OnClickDynamicPlayerTextDraw(playerid, PlayerText:textid);
 
 #define DynamicTextDrawGetRealID(%0,%1) DynamicTextDrawGetRealID_(%0, %1, __file, __line)
 #define PlayerTextDrawGetRealID(%0,%1,%2) PlayerTextDrawGetRealID_(%0, %1, %2, __file, __line)
+
+/* ================================================================ */
+/* ================================================================ */
+/* ================================================================ */
+
+#if defined _INC_open_mp
+	#if __namemax > 31
+		#if defined _ALS_TextDrawSetPreviewVehicleColors
+			#undef TextDrawSetPreviewVehicleColours
+		#else
+			#define _ALS_TextDrawSetPreviewVehicleColors
+		#endif
+		#define TextDrawSetPreviewVehicleColors(%0,%1,%2) DynamicTextDrawSetPreviewVehCol(%0, %1, %2, __file, __line)
+
+		#if defined _ALS_TextDrawSetPreviewVehicleColours
+			#undef TextDrawSetPreviewVehicleColours
+		#else
+			#define _ALS_TextDrawSetPreviewVehicleColours
+		#endif
+		#define TextDrawSetPreviewVehicleColours(%0,%1,%2) DynamicTextDrawSetPreviewVehCol(%0, %1, %2, __file, __line)
+
+		#if defined _ALS_TextDrawGetPreviewVehicleColors
+			#undef TextDrawGetPreviewVehicleColors
+		#else
+			#define _ALS_TextDrawGetPreviewVehicleColors
+		#endif
+		#define TextDrawGetPreviewVehicleColors(%0,%1,%2) DynamicTextDrawGetPreviewVehCo(%0,%1,%2, __file, __line)
+
+		#if defined _ALS_TextDrawGetPreviewVehicleColours
+			#undef TextDrawGetPreviewVehicleColours
+		#else
+			#define _ALS_TextDrawGetPreviewVehicleColours
+		#endif
+		#define TextDrawGetPreviewVehicleColours(%0,%1,%2) DynamicTextDrawGetPreviewVehCo(%0,%1,%2, __file, __line)
+
+		#if defined _ALS_PlayerTextDrawSetPreviewVehicleColors
+			#undef PlayerTextDrawSetPreviewVehicleColors
+		#else
+			#define _ALS_PlayerTextDrawSetPreviewVehicleColors
+		#endif
+		#define PlayerTextDrawSetPreviewVehicleColors(%0,%1,%2,%3) DynamicPlayerTextDrawPrevVehCol(%0, %1, %2, %3, __file, __line)
+
+		#if defined _ALS_PlayerTextDrawSetPreviewVehicleColours
+			#undef PlayerTextDrawSetPreviewVehicleColours
+		#else
+			#define _ALS_PlayerTextDrawSetPreviewVehicleColours
+		#endif
+		#define PlayerTextDrawSetPreviewVehicleColours(%0,%1,%2,%3) DynamicPlayerTextDrawPrevVehCol(%0, %1, %2, %3, __file, __line)
+
+		#if defined _ALS_PlayerTextDrawGetBackgroundColor
+			#undef PlayerTextDrawGetBackgroundColor
+		#else
+			#define _ALS_PlayerTextDrawGetBackgroundColor
+		#endif
+		#define PlayerTextDrawGetBackgroundColor(%0,%1) DynPlayerTextDrawGetBGColour_(%0,%1, __file, __line)
+
+		#if defined _ALS_PlayerTextDrawGetBackgroundColour
+			#undef PlayerTextDrawGetBackgroundColour
+		#else
+			#define _ALS_PlayerTextDrawGetBackgroundColour
+		#endif
+		#define PlayerTextDrawGetBackgroundColour(%0,%1) DynPlayerTextDrawGetBGColour_(%0,%1, __file, __line)
+
+		#if defined _ALS_PlayerTextDrawGetPreviewVehicleColors
+			#undef PlayerTextDrawGetPreviewVehicleColors
+		#else
+			#define _ALS_PlayerTextDrawGetPreviewVehicleColors
+		#endif
+		#define PlayerTextDrawGetPreviewVehicleColors(%0,%1,%2,%3) DynPlayerTextDrawGetPrevVehCol_(%0,%1,%2,%3, __file, __line)
+
+		#if defined _ALS_PlayerTextDrawGetPreviewVehicleColours
+			#undef PlayerTextDrawGetPreviewVehicleColours
+		#else
+			#define _ALS_PlayerTextDrawGetPreviewVehicleColours
+		#endif
+		#define PlayerTextDrawGetPreviewVehicleColours(%0,%1,%2,%3) DynPlayerTextDrawGetPrevVehCol_(%0,%1,%2,%3, __file, __line)
+    #endif
+
+	#if defined _ALS_TextDrawColour
+		#undef TextDrawColour
+	#else
+		#define _ALS_TextDrawColour
+	#endif
+	#define TextDrawColour(%0,%1) DynamicTextDrawColour(%0, %1, __file, __line)
+
+	#if defined _ALS_TextDrawBoxColour
+		#undef TextDrawBoxColour
+	#else
+		#define _ALS_TextDrawBoxColour
+	#endif
+	#define TextDrawBoxColour(%0,%1) DynamicTextDrawBoxColour(%0, %1, __file, __line)
+
+	#if defined _ALS_TextDrawBackgroundColour
+		#undef TextDrawBackgroundColour
+	#else
+		#define _ALS_TextDrawBackgroundColour
+	#endif
+	#define TextDrawBackgroundColour(%0,%1) DynamicTextDrawBackgroundColour(%0, %1, __file, __line)
+
+	#if defined _ALS_TextDrawGetColour
+		#undef TextDrawGetColour
+	#else
+		#define _ALS_TextDrawGetColour
+	#endif
+	#define TextDrawGetColour(%0) DynamicTextDrawGetColour_(%0, __file, __line)
+
+	#if defined _ALS_TextDrawGetBoxColour
+		#undef TextDrawGetBoxColour
+	#else
+		#define _ALS_TextDrawGetBoxColour
+	#endif
+	#define TextDrawGetBoxColour(%0) DynamicTextDrawGetBoxColour_(%0, __file, __line)
+
+	#if defined _ALS_TextDrawGetBackgroundColou
+		#undef TextDrawGetBackgroundColour
+	#else
+		#define _ALS_TextDrawGetBackgroundColou
+	#endif
+	#define TextDrawGetBackgroundColour(%0) DynamicTextDrawGetBackgroundCo(%0, __file, __line)
+
+	#if defined _ALS_PlayerTextDrawColour
+		#undef PlayerTextDrawColour
+	#else
+		#define _ALS_PlayerTextDrawColour
+	#endif
+	#define PlayerTextDrawColour(%0,%1,%2) DynamicPlayerTextDrawColour(%0, %1, %2, __file, __line)
+
+	#if defined _ALS_PlayerTextDrawBoxColour
+		#undef PlayerTextDrawBoxColour
+	#else
+		#define _ALS_PlayerTextDrawBoxColour
+	#endif
+	#define PlayerTextDrawBoxColour(%0,%1,%2) DynamicPlayerTextDrawBoxColor(%0, %1, %2, __file, __line)
+
+	#if defined _ALS_PlayerTextDrawBackgroundColour
+		#undef PlayerTextDrawBackgroundColour
+	#else
+		#define _ALS_PlayerTextDrawBackgroundColour
+	#endif
+	#define PlayerTextDrawBackgroundColour(%0,%1,%2) DynamicPlayerTextDrawBGColour(%0, %1, %2, __file, __line)
+
+	#if defined _ALS_PlayerTextDrawGetColour
+		#undef PlayerTextDrawGetColour
+	#else
+		#define _ALS_PlayerTextDrawGetColour
+	#endif
+	#define PlayerTextDrawGetColour(%0,%1) DynamicPlayerTextDrawGetColour_(%0,%1, __file, __line)
+
+	#if defined _ALS_PlayerTextDrawGetBoxColour
+		#undef PlayerTextDrawGetBoxColour
+	#else
+		#define _ALS_PlayerTextDrawGetBoxColour
+	#endif
+	#define PlayerTextDrawGetBoxColour(%0,%1) DynamicPlayerTextDrawGetBoxCol_(%0,%1, __file, __line)
+#endif
